@@ -1,0 +1,199 @@
+{
+  "form_name": "Discharge Summary",
+  "sections": [
+    {
+      "section_id": "patient_identification",
+      "title": "Patient Identification & Admission Details",
+      "fields": [
+        {"key": "patient_name", "type": "text"},
+        {"key": "mrn", "type": "text"},
+        {"key": "dob", "type": "date"},
+        {"key": "age", "type": "number"},
+        {"key": "gender", "type": "select", "options": ["Male", "Female", "Other"]},
+        {"key": "aadhaar", "type": "text"},
+        {"key": "insurance_id", "type": "text"},
+        {"key": "address", "type": "textarea"},
+        {"key": "emergency_contact", "type": "group", "fields": [
+          {"key": "name", "type": "text"},
+          {"key": "relationship", "type": "text"},
+          {"key": "phone", "type": "text"}
+        ]},
+        {"key": "admission_datetime", "type": "datetime"},
+        {"key": "discharge_datetime", "type": "datetime"},
+        {"key": "ward_unit_bed", "type": "text"},
+        {"key": "length_of_stay", "type": "number"},
+        {"key": "admitting_physician", "type": "text"},
+        {"key": "discharging_physician", "type": "text"},
+        {"key": "mode_of_admission", "type": "select", "options": ["Emergency", "Elective", "Transfer", "OPD Referral"]},
+        {"key": "discharge_type", "type": "select", "options": ["Routine", "LAMA", "Transfer", "Expired"]}
+      ]
+    },
+    {
+      "section_id": "diagnosis",
+      "title": "Diagnosis",
+      "fields": [
+        {"key": "primary_diagnosis", "type": "text"},
+        {"key": "secondary_diagnosis_1", "type": "text"},
+        {"key": "secondary_diagnosis_2", "type": "text"},
+        {"key": "complication", "type": "text"},
+        {"key": "primary_procedure", "type": "text"},
+        {"key": "secondary_procedure", "type": "text"}
+      ]
+    },
+    {
+      "section_id": "presenting_complaint",
+      "title": "Presenting Complaint & History",
+      "fields": [
+        {"key": "chief_complaint", "type": "textarea"},
+        {"key": "history_present_illness", "type": "textarea"},
+        {"key": "past_medical_history", "type": "textarea"},
+        {"key": "past_surgical_history", "type": "textarea"},
+        {"key": "family_history", "type": "textarea"},
+        {"key": "social_occupational_history", "type": "textarea"}
+      ]
+    },
+    {
+      "section_id": "clinical_exam",
+      "title": "Clinical Examination",
+      "fields": [
+        {"key": "temperature", "type": "number"},
+        {"key": "heart_rate", "type": "number"},
+        {"key": "bp", "type": "text"},
+        {"key": "respiratory_rate", "type": "number"},
+        {"key": "spo2", "type": "number"},
+        {"key": "gcs", "type": "text"},
+        {"key": "height", "type": "number"},
+        {"key": "weight", "type": "number"},
+        {"key": "bmi", "type": "number"},
+        {"key": "systemic_exam", "type": "group", "fields": [
+          {"key": "cardiovascular", "type": "textarea"},
+          {"key": "respiratory", "type": "textarea"},
+          {"key": "gastrointestinal", "type": "textarea"},
+          {"key": "neurological", "type": "textarea"},
+          {"key": "musculoskeletal", "type": "textarea"},
+          {"key": "genitourinary", "type": "textarea"},
+          {"key": "skin_lymph", "type": "textarea"}
+        ]}
+      ]
+    },
+    {
+      "section_id": "investigations",
+      "title": "Investigations & Diagnostic Results",
+      "fields": [
+        {"key": "laboratory_results", "type": "table"},
+        {"key": "microbiology_reports", "type": "table"},
+        {"key": "imaging_procedures", "type": "table"}
+      ]
+    },
+    {
+      "section_id": "clinical_course",
+      "title": "Clinical Course & Management",
+      "fields": [
+        {"key": "hospital_course_summary", "type": "textarea"},
+        {"key": "consultations", "type": "table"},
+        {"key": "procedures_performed", "type": "table"},
+        {"key": "blood_transfusions", "type": "table"}
+      ]
+    },
+    {
+      "section_id": "medications",
+      "title": "Medication Record",
+      "fields": [
+        {"key": "allergies", "type": "table"},
+        {"key": "medications_on_discharge", "type": "table"},
+        {"key": "medications_changed", "type": "textarea"}
+      ]
+    },
+    {
+      "section_id": "discharge_condition",
+      "title": "Condition at Discharge",
+      "fields": [
+        {"key": "general_condition", "type": "select", "options": ["Stable", "Improving", "Critical"]},
+        {"key": "vitals_discharge", "type": "text"},
+        {"key": "wound_status", "type": "text"},
+        {"key": "mobility_status", "type": "select", "options": ["Ambulatory", "Assisted", "Bedbound"]},
+        {"key": "diet_nutrition", "type": "text"},
+        {"key": "continence", "type": "text"},
+        {"key": "cognition_score", "type": "number"}
+      ]
+    },
+    {
+      "section_id": "instructions",
+      "title": "Discharge Instructions & Follow-Up",
+      "fields": [
+        {"key": "education_provided", "type": "group", "fields": [
+          {"key": "diagnosis_explained", "type": "boolean"},
+          {"key": "written_instructions", "type": "boolean"},
+          {"key": "medication_counselling", "type": "boolean"},
+          {"key": "warning_signs", "type": "boolean"},
+          {"key": "diet_lifestyle", "type": "boolean"},
+          {"key": "wound_care", "type": "boolean"}
+        ]},
+        {"key": "activity_restrictions", "type": "textarea"},
+        {"key": "dietary_restrictions", "type": "textarea"},
+        {"key": "follow_up_appointments", "type": "table"},
+        {"key": "referrals", "type": "table"},
+        {"key": "pending_reports", "type": "textarea"}
+      ]
+    },
+    {
+      "section_id": "infection_control",
+      "title": "Infection Prevention & Control",
+      "fields": [
+        {"key": "cauti", "type": "boolean"},
+        {"key": "clabsi", "type": "boolean"},
+        {"key": "vap", "type": "boolean"},
+        {"key": "ssi", "type": "boolean"},
+        {"key": "isolation_precautions", "type": "text"},
+        {"key": "mdro_screening", "type": "text"},
+        {"key": "notifiable_disease", "type": "boolean"}
+      ]
+    },
+    {
+      "section_id": "quality_indicators",
+      "title": "Quality Indicators & Patient Safety",
+      "fields": [
+        {"key": "vte_prophylaxis", "type": "boolean"},
+        {"key": "fall_risk_assessment", "type": "boolean"},
+        {"key": "pressure_ulcer_risk", "type": "boolean"},
+        {"key": "sepsis_compliance", "type": "boolean"},
+        {"key": "code_status_documented", "type": "boolean"},
+        {"key": "consent_obtained", "type": "boolean"},
+        {"key": "patient_identification_protocol", "type": "boolean"},
+        {"key": "pain_assessment", "type": "boolean"},
+        {"key": "readmission_risk", "type": "text"},
+        {"key": "adverse_event_reported", "type": "boolean"},
+        {"key": "advance_directive", "type": "boolean"},
+        {"key": "dnar_status", "type": "text"}
+      ]
+    },
+    {
+      "section_id": "signatures",
+      "title": "Authorization & Signatures",
+      "fields": [
+        {"key": "doctor_name", "type": "text"},
+        {"key": "doctor_registration", "type": "text"},
+        {"key": "doctor_signature", "type": "text"},
+        {"key": "patient_name", "type": "text"},
+        {"key": "patient_signature", "type": "text"},
+        {"key": "resident_name", "type": "text"},
+        {"key": "resident_signature", "type": "text"},
+        {"key": "nurse_name", "type": "text"},
+        {"key": "nurse_signature", "type": "text"}
+      ]
+    },
+    {
+      "section_id": "administrative",
+      "title": "Administrative & Records Management",
+      "fields": [
+        {"key": "summary_sent_to_doctor", "type": "boolean"},
+        {"key": "copy_given_to_patient", "type": "boolean"},
+        {"key": "ehr_updated", "type": "boolean"},
+        {"key": "medical_coding_done", "type": "boolean"},
+        {"key": "insurance_claim_submitted", "type": "boolean"},
+        {"key": "mortality_review_flag", "type": "boolean"},
+        {"key": "organ_donation_documented", "type": "boolean"}
+      ]
+    }
+  ]
+}

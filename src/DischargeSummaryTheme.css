@@ -1,0 +1,427 @@
+/**
+ * Screen theme — clinical document palette (navy header, paper field,
+ * slate type, institutional blue accents — aligned with formal CDC/NHS-style forms).
+ */
+
+:root {
+  --ds-navy: #0f2744;
+  --ds-navy-mid: #1a3a5c;
+  --ds-navy-light: #2a4d73;
+  --ds-slate: #3d4f5f;
+  --ds-muted: #5c6d7d;
+  --ds-paper: #ffffff;
+  --ds-paper-warm: #fbf9f6;
+  --ds-paper-tint: #f3f6fa;
+  --ds-rule: #c8d4e0;
+  --ds-rule-strong: #8fa3b6;
+  --ds-accent: #0b5cab;
+  --ds-accent-soft: rgba(11, 92, 171, 0.12);
+  --ds-gold: #b8860b;
+  --ds-gold-soft: #d4a84b;
+  --ds-danger: #b42318;
+  --ds-danger-soft: #fde8e6;
+  --ds-shadow: 0 8px 32px rgba(15, 39, 68, 0.1);
+  --ds-shadow-sm: 0 2px 12px rgba(15, 39, 68, 0.06);
+  --ds-radius: 10px;
+  --ds-radius-sm: 6px;
+  --ds-font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --ds-font-display: 'IBM Plex Serif', Georgia, 'Times New Roman', serif;
+  /* Chevron for custom selects (navy) */
+  --ds-select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%231a3a5c' d='M1.41 0 6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+}
+
+.ds-app-shell {
+  min-height: 100vh;
+  font-family: var(--ds-font-sans);
+  color: var(--ds-slate);
+  background: linear-gradient(
+    165deg,
+    #dfe8f2 0%,
+    #e8eef6 28%,
+    #f2f5fa 55%,
+    #e5ecf4 100%
+  );
+  background-attachment: fixed;
+}
+
+.ds-print-inner {
+  position: relative;
+  color-scheme: light;
+}
+
+/* Masthead — navy “letterhead” + gold rule like official PDFs */
+.ds-masthead {
+  border-radius: var(--ds-radius);
+  box-shadow: var(--ds-shadow);
+  background: var(--ds-paper);
+  overflow: hidden;
+}
+
+.ds-masthead__accent-bar {
+  height: 5px;
+  background: linear-gradient(
+    90deg,
+    var(--ds-gold) 0%,
+    var(--ds-gold-soft) 35%,
+    var(--ds-navy-mid) 100%
+  );
+}
+
+.ds-masthead__ribbon {
+  background: linear-gradient(
+    135deg,
+    var(--ds-navy) 0%,
+    var(--ds-navy-mid) 45%,
+    var(--ds-navy-light) 100%
+  );
+  color: #f0f4f8;
+  margin: 0;
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.ds-masthead__org {
+  font-family: var(--ds-font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  color: #fff;
+  line-height: 1.35;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.ds-masthead__dept {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.82);
+  margin-top: 0.35rem;
+}
+
+.ds-masthead__badge-wrap {
+  text-align: right;
+}
+
+@media (max-width: 767.98px) {
+  .ds-masthead__badge-wrap {
+    text-align: left;
+    margin-top: 1rem;
+  }
+}
+
+.ds-masthead__badge {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ds-masthead__meta {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.ds-masthead__title-block {
+  background: var(--ds-paper-warm);
+  padding: 1.25rem 1.5rem 1.5rem;
+  border-top: 1px solid var(--ds-rule);
+}
+
+.ds-masthead__title {
+  font-family: var(--ds-font-display);
+  font-weight: 700;
+  font-size: 1.65rem;
+  letter-spacing: 0.12em;
+  color: var(--ds-navy);
+  margin: 0;
+}
+
+.ds-masthead__subtitle {
+  font-size: 0.8125rem;
+  color: var(--ds-muted);
+  margin: 0.5rem 0 0;
+}
+
+.ds-masthead__compliance {
+  font-size: 0.75rem;
+  color: var(--ds-accent);
+  font-weight: 600;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--ds-rule);
+}
+
+/* Subtitle under masthead */
+.ds-page-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ds-navy-light);
+  margin-bottom: 0.25rem;
+}
+
+.ds-page-title {
+  font-family: var(--ds-font-display);
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--ds-navy-mid);
+}
+
+/* Section cards */
+.ds-section-card {
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius);
+  box-shadow: var(--ds-shadow-sm);
+  background: var(--ds-paper);
+  overflow: hidden;
+}
+
+.ds-section-card__header {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(
+    90deg,
+    var(--ds-navy-mid) 0%,
+    var(--ds-navy-light) 100%
+  );
+  border-bottom: 2px solid var(--ds-gold-soft);
+}
+
+.ds-section-card__body {
+  background: linear-gradient(180deg, var(--ds-paper) 0%, var(--ds-paper-tint) 100%);
+}
+
+/* Form controls */
+.ds-print-inner .form-label {
+  color: var(--ds-navy-mid);
+  font-size: 0.8rem;
+  margin-bottom: 0.35rem;
+}
+
+.ds-print-inner .form-control,
+.ds-print-inner .form-select {
+  border-radius: var(--ds-radius-sm);
+  border-color: var(--ds-rule);
+  background-color: var(--ds-paper-warm);
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.ds-print-inner .form-control:hover,
+.ds-print-inner .form-select:hover {
+  border-color: var(--ds-rule-strong);
+  background-color: #fff;
+}
+
+.ds-print-inner .form-control:focus,
+.ds-print-inner .form-select:focus {
+  border-color: var(--ds-accent);
+  box-shadow:
+    0 0 0 0.2rem var(--ds-accent-soft),
+    inset 0 1px 2px rgba(15, 39, 68, 0.04);
+  background-color: #fff;
+}
+
+/* —— Dropdowns (select) —— */
+.ds-print-inner .form-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: var(--ds-select-chevron);
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 12px 8px;
+  padding-right: 2.5rem;
+  font-weight: 500;
+  color: var(--ds-slate);
+  cursor: pointer;
+  box-shadow: inset 0 1px 2px rgba(15, 39, 68, 0.04);
+}
+
+.ds-print-inner .form-select:hover {
+  background-image: var(--ds-select-chevron);
+}
+
+.ds-print-inner .form-select:focus {
+  background-image: var(--ds-select-chevron);
+}
+
+/* Placeholder option (empty value) — softer than real answers */
+.ds-print-inner .form-select:has(option:checked[value='']) {
+  color: var(--ds-muted);
+  font-weight: 500;
+}
+
+.ds-print-inner .form-select-sm {
+  padding-right: 2rem;
+  background-position: right 0.6rem center;
+  background-size: 10px 7px;
+  font-weight: 500;
+}
+
+/* —— Date, datetime, time (native pickers) —— */
+.ds-print-inner input[type='date'],
+.ds-print-inner input[type='datetime-local'],
+.ds-print-inner input[type='time'] {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: var(--ds-navy-mid);
+  cursor: pointer;
+  box-shadow: inset 0 1px 2px rgba(15, 39, 68, 0.04);
+  accent-color: var(--ds-accent);
+  min-height: calc(1.5em + 0.75rem + 2px);
+}
+
+.ds-print-inner .form-control-sm[type='date'],
+.ds-print-inner .form-control-sm[type='datetime-local'],
+.ds-print-inner .form-control-sm[type='time'] {
+  min-height: calc(1.5em + 0.5rem + 2px);
+}
+
+/* WebKit / Chromium: calendar & clock icons */
+.ds-print-inner input[type='date']::-webkit-calendar-picker-indicator,
+.ds-print-inner input[type='datetime-local']::-webkit-calendar-picker-indicator,
+.ds-print-inner input[type='time']::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.65;
+  padding: 0.35rem;
+  margin-left: 0.25rem;
+  border-radius: var(--ds-radius-sm);
+  transition:
+    opacity 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.ds-print-inner input[type='date']::-webkit-calendar-picker-indicator:hover,
+.ds-print-inner input[type='datetime-local']::-webkit-calendar-picker-indicator:hover,
+.ds-print-inner input[type='time']::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  background-color: var(--ds-accent-soft);
+}
+
+.ds-print-inner input[type='date']:focus::-webkit-calendar-picker-indicator,
+.ds-print-inner input[type='datetime-local']:focus::-webkit-calendar-picker-indicator,
+.ds-print-inner input[type='time']:focus::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  background-color: var(--ds-accent-soft);
+}
+
+/* Accent bar inside field on focus (no layout shift vs border-left) */
+.ds-print-inner input[type='date']:focus,
+.ds-print-inner input[type='datetime-local']:focus,
+.ds-print-inner input[type='time']:focus {
+  box-shadow:
+    0 0 0 0.2rem var(--ds-accent-soft),
+    inset 3px 0 0 0 var(--ds-accent),
+    inset 0 1px 2px rgba(15, 39, 68, 0.04);
+}
+
+.ds-print-inner textarea.form-control {
+  min-height: 2.75rem;
+  max-height: none;
+  overflow: hidden;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+/* Tables */
+.ds-print-inner .table {
+  border-color: var(--ds-rule);
+  --bs-table-bg: transparent;
+}
+
+.ds-print-inner .table thead.table-light th {
+  background: linear-gradient(180deg, #e8eef5 0%, #dde6f0 100%) !important;
+  color: var(--ds-navy-mid);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-color: var(--ds-rule);
+  vertical-align: middle;
+}
+
+.ds-print-inner .table td {
+  border-color: var(--ds-rule);
+  vertical-align: middle;
+}
+
+.ds-print-inner .table-bordered > :not(caption) > * > * {
+  border-color: var(--ds-rule);
+}
+
+/* Marker class for lab investigations table (not wrapped in .table-responsive — see JSX). */
+.ds-print-inner .ds-lab-investigations-table {
+  width: 100%;
+}
+
+/* Alerts */
+.ds-print-inner .alert-warning {
+  background: linear-gradient(90deg, #fff8e6 0%, #fff4dc 100%);
+  border-color: #d44b4b;
+  color: #d44b4b;
+  border-radius: var(--ds-radius-sm);
+}
+
+.ds-print-inner .alert-light {
+  background: var(--ds-paper-tint);
+  border-color: var(--ds-rule);
+  color: var(--ds-slate);
+  border-radius: var(--ds-radius-sm);
+}
+
+/* Regulatory footer */
+.ds-regulatory-card {
+  border-radius: var(--ds-radius);
+  border: 1px solid var(--ds-rule);
+  background: linear-gradient(180deg, #eef2f7 0%, #e4eaf2 100%);
+  box-shadow: var(--ds-shadow-sm);
+}
+
+.ds-regulatory-card .card-body {
+  color: var(--ds-muted);
+}
+
+.ds-regulatory-card .fw-semibold.text-body {
+  color: var(--ds-navy-mid) !important;
+}
+
+/* Action bar */
+.ds-action-bar {
+  background: var(--ds-paper);
+  border-radius: var(--ds-radius);
+  box-shadow: var(--ds-shadow-sm);
+  border: 1px solid var(--ds-rule);
+}
+
+.ds-action-bar .btn-primary {
+  background: linear-gradient(180deg, var(--ds-navy-light) 0%, var(--ds-navy-mid) 100%);
+  border-color: var(--ds-navy);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.6rem 1.35rem;
+  border-radius: var(--ds-radius-sm);
+  box-shadow: 0 2px 8px rgba(15, 39, 68, 0.25);
+}
+
+.ds-action-bar .btn-primary:hover {
+  background: var(--ds-navy);
+  border-color: var(--ds-navy);
+}
+
+.ds-action-bar .btn-outline-primary {
+  color: var(--ds-accent);
+  border-color: var(--ds-accent);
+  font-weight: 600;
+  border-radius: var(--ds-radius-sm);
+  padding: 0.6rem 1.35rem;
+}
+
+.ds-action-bar .btn-outline-primary:hover {
+  background: var(--ds-accent);
+  border-color: var(--ds-accent);
+  color: #fff;
+}

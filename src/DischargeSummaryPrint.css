@@ -1,0 +1,472 @@
+/**
+ * Print: match on-screen UI — pagination, grid, and form fields.
+ */
+
+@media print {
+  @page {
+    margin: 10mm;
+    size: A4 portrait;
+  }
+
+  .d-print-none {
+    display: none !important;
+  }
+
+  html,
+  body {
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #root {
+    min-height: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Fixed backgrounds break Chrome print layout */
+  .ds-app-shell {
+    min-height: 0 !important;
+    height: auto !important;
+    background-attachment: scroll !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #discharge-summary-print-area {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  #discharge-summary-print-area,
+  #discharge-summary-print-area * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #discharge-summary-print-area .container-fluid {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* Allow section cards to split across pages (avoids shoving Section 1 to page 2) */
+  #discharge-summary-print-area .card {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+    overflow: visible !important;
+  }
+
+  #discharge-summary-print-area .ds-masthead {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    page-break-after: avoid;
+  }
+
+  #discharge-summary-print-area .ds-section-card__header {
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  #discharge-summary-print-area .card-body {
+    overflow: visible !important;
+  }
+
+  .table-responsive {
+    overflow: visible !important;
+    max-width: 100% !important;
+  }
+
+  #discharge-summary-print-area .table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  /* Match screen field appearance (min-height on inputs/selects only — not textarea: blocks auto-grow) */
+  #discharge-summary-print-area .form-control,
+  #discharge-summary-print-area .form-select {
+    border: 1px solid var(--ds-rule-strong, #8fa3b6) !important;
+    background-color: var(--ds-paper-warm, #fbf9f6) !important;
+    color: var(--ds-slate, #3d4f5f) !important;
+    box-shadow: none !important;
+    border-radius: var(--ds-radius-sm, 6px) !important;
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #discharge-summary-print-area .form-control:not(textarea),
+  #discharge-summary-print-area .form-select {
+    min-height: calc(1.5em + 0.75rem + 2px) !important;
+  }
+
+  #discharge-summary-print-area .form-control {
+    padding: 0.375rem 0.75rem !important;
+  }
+
+  /* Keep extra padding-right so custom chevron (theme) does not overlap label text */
+  #discharge-summary-print-area .form-select {
+    padding: 0.375rem 2.5rem 0.375rem 0.75rem !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    background-image: var(--ds-select-chevron) !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.85rem center !important;
+    background-size: 12px 8px !important;
+  }
+
+  #discharge-summary-print-area .form-control-sm:not(textarea) {
+    min-height: calc(1.5em + 0.5rem + 2px) !important;
+  }
+
+  #discharge-summary-print-area .form-control-sm {
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.875rem !important;
+  }
+
+  #discharge-summary-print-area .form-select-sm {
+    min-height: calc(1.5em + 0.5rem + 2px) !important;
+    padding: 0.25rem 2rem 0.25rem 0.5rem !important;
+    font-size: 0.875rem !important;
+    background-position: right 0.6rem center !important;
+    background-size: 10px 7px !important;
+  }
+
+  /* No min-height !important — it blocked JS auto-grow; rows + resize script set height */
+  #discharge-summary-print-area textarea.form-control {
+    min-height: 2.75rem;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    vertical-align: top !important;
+  }
+
+  #discharge-summary-print-area textarea.form-control-sm {
+    min-height: 2.25rem;
+  }
+
+  #discharge-summary-print-area .form-check-input {
+    border: 1px solid var(--ds-rule-strong, #8fa3b6) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Print uses a narrow “viewport” in some browsers — force desktop grid like the UI */
+  #discharge-summary-print-area .row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+  }
+
+  #discharge-summary-print-area .row > * {
+    flex-shrink: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  #discharge-summary-print-area .row > .col,
+  #discharge-summary-print-area .row > [class*='col-'] {
+    padding-left: calc(var(--bs-gutter-x) * 0.5) !important;
+    padding-right: calc(var(--bs-gutter-x) * 0.5) !important;
+  }
+
+  #discharge-summary-print-area .row > .col-12,
+  #discharge-summary-print-area .row > [class*='col-xs-12'],
+  #discharge-summary-print-area .row > [class*='col-12'] {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  #discharge-summary-print-area .row > .col-auto,
+  #discharge-summary-print-area .row > [class*='col-auto'] {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  #discharge-summary-print-area .row > .col-sm-4,
+  #discharge-summary-print-area .row > [class*='col-sm-4'] {
+    flex: 0 0 33.33333333% !important;
+    width: 33.33333333% !important;
+    max-width: 33.33333333% !important;
+  }
+
+  #discharge-summary-print-area .row > .col-sm-6,
+  #discharge-summary-print-area .row > [class*='col-sm-6'] {
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    max-width: 50% !important;
+  }
+
+  #discharge-summary-print-area .row > .col-md-2,
+  #discharge-summary-print-area .row > [class*='col-md-2'] {
+    flex: 0 0 16.66666667% !important;
+    width: 16.66666667% !important;
+    max-width: 16.66666667% !important;
+  }
+
+  #discharge-summary-print-area .row > .col-md-3,
+  #discharge-summary-print-area .row > [class*='col-md-3'] {
+    flex: 0 0 25% !important;
+    width: 25% !important;
+    max-width: 25% !important;
+  }
+
+  #discharge-summary-print-area .row > .col-md-4,
+  #discharge-summary-print-area .row > [class*='col-md-4'] {
+    flex: 0 0 33.33333333% !important;
+    width: 33.33333333% !important;
+    max-width: 33.33333333% !important;
+  }
+
+  #discharge-summary-print-area .row > .col-md-6,
+  #discharge-summary-print-area .row > [class*='col-md-6'] {
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    max-width: 50% !important;
+  }
+
+  #discharge-summary-print-area .row > .col-md-8,
+  #discharge-summary-print-area .row > [class*='col-md-8'] {
+    flex: 0 0 66.66666667% !important;
+    width: 66.66666667% !important;
+    max-width: 66.66666667% !important;
+  }
+}
+
+/*
+ * PDF export (html2pdf.js → html2canvas): @media print is NOT applied during capture.
+ * Toggle .ds-pdf-capture on #discharge-summary-print-area while generating so layout
+ * matches the print stylesheet above.
+ */
+#discharge-summary-print-area.ds-pdf-capture {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+  background: #ffffff !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .ds-print-inner {
+  background: #ffffff !important;
+  background-image: none !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture,
+#discharge-summary-print-area.ds-pdf-capture * {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .container-fluid {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .card {
+  break-inside: auto !important;
+  page-break-inside: auto !important;
+  overflow: visible !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .ds-masthead {
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+  page-break-after: avoid;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .ds-section-card__header {
+  break-after: avoid;
+  page-break-after: avoid;
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .table-responsive {
+  overflow: visible !important;
+  max-width: 100% !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .form-control,
+#discharge-summary-print-area.ds-pdf-capture .form-select {
+  border: 1px solid var(--ds-rule-strong, #8fa3b6) !important;
+  background-color: var(--ds-paper-warm, #fbf9f6) !important;
+  color: var(--ds-slate, #3d4f5f) !important;
+  box-shadow: none !important;
+  border-radius: var(--ds-radius-sm, 6px) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .form-control:not(textarea),
+#discharge-summary-print-area.ds-pdf-capture .form-select {
+  min-height: calc(1.5em + 0.75rem + 2px) !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .form-control {
+  padding: 0.375rem 0.75rem !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .form-select {
+  padding: 0.375rem 2.5rem 0.375rem 0.75rem !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background-image: var(--ds-select-chevron) !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.85rem center !important;
+  background-size: 12px 8px !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .form-control-sm:not(textarea) {
+  min-height: calc(1.5em + 0.5rem + 2px) !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .form-control-sm {
+  padding: 0.25rem 0.5rem !important;
+  font-size: 0.875rem !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .form-select-sm {
+  min-height: calc(1.5em + 0.5rem + 2px) !important;
+  padding: 0.25rem 2rem 0.25rem 0.5rem !important;
+  font-size: 0.875rem !important;
+  background-position: right 0.6rem center !important;
+  background-size: 10px 7px !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture textarea.form-control {
+  min-height: 2.75rem;
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  vertical-align: top !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture textarea.form-control-sm {
+  min-height: 2.25rem;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .card-body {
+  overflow: visible !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .form-check-input {
+  border: 1px solid var(--ds-rule-strong, #8fa3b6) !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .row {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .row > * {
+  flex-shrink: 0 !important;
+  margin-top: 0 !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .row > .col,
+#discharge-summary-print-area.ds-pdf-capture .row > [class*='col-'] {
+  padding-left: calc(var(--bs-gutter-x) * 0.5) !important;
+  padding-right: calc(var(--bs-gutter-x) * 0.5) !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .row > .col-12,
+#discharge-summary-print-area.ds-pdf-capture .row > [class*='col-xs-12'],
+#discharge-summary-print-area.ds-pdf-capture .row > [class*='col-12'] {
+  flex: 0 0 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .row > .col-auto,
+#discharge-summary-print-area.ds-pdf-capture .row > [class*='col-auto'] {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .row > .col-sm-4,
+#discharge-summary-print-area.ds-pdf-capture .row > [class*='col-sm-4'] {
+  flex: 0 0 33.33333333% !important;
+  width: 33.33333333% !important;
+  max-width: 33.33333333% !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .row > .col-sm-6,
+#discharge-summary-print-area.ds-pdf-capture .row > [class*='col-sm-6'] {
+  flex: 0 0 50% !important;
+  width: 50% !important;
+  max-width: 50% !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .row > .col-md-2,
+#discharge-summary-print-area.ds-pdf-capture .row > [class*='col-md-2'] {
+  flex: 0 0 16.66666667% !important;
+  width: 16.66666667% !important;
+  max-width: 16.66666667% !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .row > .col-md-3,
+#discharge-summary-print-area.ds-pdf-capture .row > [class*='col-md-3'] {
+  flex: 0 0 25% !important;
+  width: 25% !important;
+  max-width: 25% !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .row > .col-md-4,
+#discharge-summary-print-area.ds-pdf-capture .row > [class*='col-md-4'] {
+  flex: 0 0 33.33333333% !important;
+  width: 33.33333333% !important;
+  max-width: 33.33333333% !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .row > .col-md-6,
+#discharge-summary-print-area.ds-pdf-capture .row > [class*='col-md-6'] {
+  flex: 0 0 50% !important;
+  width: 50% !important;
+  max-width: 50% !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .row > .col-md-8,
+#discharge-summary-print-area.ds-pdf-capture .row > [class*='col-md-8'] {
+  flex: 0 0 66.66666667% !important;
+  width: 66.66666667% !important;
+  max-width: 66.66666667% !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .row > .col-lg-3,
+#discharge-summary-print-area.ds-pdf-capture .row > [class*='col-lg-3'] {
+  flex: 0 0 25% !important;
+  width: 25% !important;
+  max-width: 25% !important;
+}
+
+#discharge-summary-print-area.ds-pdf-capture .row > .col-lg-6,
+#discharge-summary-print-area.ds-pdf-capture .row > [class*='col-lg-6'] {
+  flex: 0 0 50% !important;
+  width: 50% !important;
+  max-width: 50% !important;
+}
