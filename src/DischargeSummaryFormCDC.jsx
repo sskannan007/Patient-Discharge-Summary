@@ -307,147 +307,183 @@ export default function DischargeSummaryFormCDC() {
         </div>
         <div className="ds-masthead__title-block text-center">
           <h3 className="ds-masthead__title">PATIENT DISCHARGE SUMMARY</h3>
-          <p className="ds-masthead__subtitle mb-0">
-            Compliant with CDC, NHS, and NIH documentation standards
+          <p className="ds-masthead__subtitle mb-1">
+            Compliant with CDC, NHS, and NIH Documentation Standards
           </p>
+          {/* <div className="ds-masthead__confidential-line">
+            <span className="fw-semibold">CONFIDENTIAL — For Authorized Use Only</span>
+            <span className="ds-masthead__confidential-sep">|</span>
+            <span>Apex Tertiary Care Hospital</span>
+            <span className="ds-masthead__confidential-sep">|</span>
+            <span>Compliant: CDC / NHS / NIH</span>
+            <span className="ds-masthead__confidential-sep">|</span>
+            <span>Page&nbsp;PageNumber</span>
+          </div> */}
         </div>
       </Card>
 
-      {/* SECTION 1 */}
+      {/* SECTION 1 — table grid, matches PDF layout */}
       <SectionCard number={1} title="Patient Identification & Admission Details">
-        <Row className="g-3">
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Patient Name</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">MRN / Hospital ID</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Date of Birth</Form.Label>
-              <Form.Control type="date" />
-            </Form.Group>
-          </Col>
-          <Col md={3}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Age</Form.Label>
-              <Form.Control type="number" placeholder="yrs" />
-            </Form.Group>
-          </Col>
-          <Col md={3}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Gender</Form.Label>
-              <Form.Select aria-label="Gender">
-                <option value="">Select the gender</option>
-                <option>Male</option>
-                <option>Female</option>
-                <option>Other</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">National ID / Aadhaar</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Insurance / Payer ID</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-          </Col>
-          <Col xs={12}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Address</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Emergency contact — Name</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Relationship</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Phone</Form.Label>
-              <Form.Control type="tel" />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Admission date &amp; time</Form.Label>
-              <Form.Control type="datetime-local" />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Discharge date &amp; time</Form.Label>
-              <Form.Control type="datetime-local" />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Ward / Unit / Bed No.</Form.Label>
-              <Form.Control as="textarea" rows={2} placeholder="Ward / Unit / Bed" />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Total length of stay (days)</Form.Label>
-              <Form.Control type="number" />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Admitting physician</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Discharging physician</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Mode of admission</Form.Label>
-              <Form.Select aria-label="Mode of admission">
-                <option value="">Select the mode of admission</option>
-                <option>Emergency</option>
-                <option>Elective</option>
-                <option>Transfer</option>
-                <option>OPD Referral</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label className="small fw-semibold">Discharge type</Form.Label>
-              <Form.Select aria-label="Discharge type">
-                <option value="">Select the discharge type</option>
-                <option>Routine</option>
-                <option>LAMA</option>
-                <option>Transfer</option>
-                <option>Expired</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
-        </Row>
+        <Table bordered size="sm" className="mb-0 ds-section1-table">
+          <tbody>
+            <tr>
+              <td className="ds-section1-label-cell">Patient Name</td>
+              <td className="ds-section1-value-cell">
+                <Form.Control size="sm" as="textarea" rows={1} />
+              </td>
+              <td className="ds-section1-label-cell">MRN / Hospital ID</td>
+              <td className="ds-section1-value-cell">
+                <Form.Control size="sm" as="textarea" rows={1} />
+              </td>
+            </tr>
+            <tr>
+              <td className="ds-section1-label-cell">Date of Birth</td>
+              <td className="ds-section1-value-cell">
+                <Form.Control
+                  size="sm"
+                  type="text"
+                  placeholder="DD / MM / YYYY"
+                  aria-label="Date of birth"
+                />
+              </td>
+              <td className="ds-section1-label-cell">Age / Gender</td>
+              <td className="ds-section1-value-cell">
+                <div className="ds-section1-split-row">
+                  <Form.Control
+                    size="sm"
+                    type="text"
+                    placeholder="___ yrs"
+                    aria-label="Age in years"
+                  />
+                  <Form.Control
+                    size="sm"
+                    type="text"
+                    placeholder="M / F / Other"
+                    aria-label="Gender"
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className="ds-section1-label-cell">National ID / Aadhaar</td>
+              <td className="ds-section1-value-cell">
+                <Form.Control size="sm" as="textarea" rows={1} />
+              </td>
+              <td className="ds-section1-label-cell">Insurance / Payer ID</td>
+              <td className="ds-section1-value-cell">
+                <Form.Control size="sm" as="textarea" rows={1} />
+              </td>
+            </tr>
+            <tr>
+              <td className="ds-section1-label-cell">Address</td>
+              <td className="ds-section1-value-cell" colSpan={3}>
+                <Form.Control size="sm" as="textarea" rows={2} />
+              </td>
+            </tr>
+            <tr>
+              <td className="ds-section1-label-cell">Emergency Contact</td>
+              <td className="ds-section1-value-cell">
+                <Form.Control
+                  size="sm"
+                  as="textarea"
+                  rows={1}
+                  placeholder="Name"
+                  aria-label="Emergency contact name"
+                />
+              </td>
+              <td className="ds-section1-label-cell">Relationship / Phone</td>
+              <td className="ds-section1-value-cell">
+                <div className="ds-section1-split-row">
+                  <Form.Control
+                    size="sm"
+                    as="textarea"
+                    rows={1}
+                    placeholder="Relationship"
+                    aria-label="Emergency contact relationship"
+                  />
+                  <Form.Control
+                    size="sm"
+                    type="tel"
+                    placeholder="Phone"
+                    aria-label="Emergency contact phone"
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className="ds-section1-label-cell">Admission Date &amp; Time</td>
+              <td className="ds-section1-value-cell">
+                <Form.Control
+                  size="sm"
+                  type="text"
+                  placeholder="DD/MM/YYYY HH:MM"
+                  aria-label="Admission date and time"
+                />
+              </td>
+              <td className="ds-section1-label-cell">Discharge Date &amp; Time</td>
+              <td className="ds-section1-value-cell">
+                <Form.Control
+                  size="sm"
+                  type="text"
+                  placeholder="DD/MM/YYYY HH:MM"
+                  aria-label="Discharge date and time"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td className="ds-section1-label-cell">Ward / Unit / Bed No.</td>
+              <td className="ds-section1-value-cell">
+                <Form.Control
+                  size="sm"
+                  type="text"
+                  placeholder="___ / ___ / ___"
+                  aria-label="Ward unit bed number"
+                />
+              </td>
+              <td className="ds-section1-label-cell">Total Length of Stay</td>
+              <td className="ds-section1-value-cell">
+                <Form.Control
+                  size="sm"
+                  type="text"
+                  placeholder="___ days"
+                  aria-label="Total length of stay in days"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td className="ds-section1-label-cell">Admitting Physician</td>
+              <td className="ds-section1-value-cell">
+                <Form.Control size="sm" as="textarea" rows={1} />
+              </td>
+              <td className="ds-section1-label-cell">Discharging Physician</td>
+              <td className="ds-section1-value-cell">
+                <Form.Control size="sm" as="textarea" rows={1} />
+              </td>
+            </tr>
+            <tr>
+              <td className="ds-section1-label-cell">Mode of Admission</td>
+              <td className="ds-section1-value-cell">
+                <Form.Control
+                  size="sm"
+                  as="textarea"
+                  rows={1}
+                  placeholder="Emergency / Elective / Transfer / OPD Referral"
+                  aria-label="Mode of admission"
+                />
+              </td>
+              <td className="ds-section1-label-cell">Discharge Type</td>
+              <td className="ds-section1-value-cell">
+                <Form.Control
+                  size="sm"
+                  as="textarea"
+                  rows={1}
+                  placeholder="Routine / LAMA / Transfer / Expired"
+                  aria-label="Discharge type"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </Table>
       </SectionCard>
 
       {/* SECTION 2 */}
@@ -456,7 +492,7 @@ export default function DischargeSummaryFormCDC() {
           Note: ICD-10 coding aligns with CDC NCHS guidelines. Dual coding (ICD-10-CM/PCS) required for
           inpatient encounters.
         </Alert>
-        <Table bordered responsive size="sm" className="mb-0">
+        <Table bordered responsive size="sm" className="mb-0 ds-band-header">
           <thead className="table-light">
             <tr>
               <th>Diagnosis</th>
@@ -494,116 +530,169 @@ export default function DischargeSummaryFormCDC() {
         <Form.Group className="mb-3">
           <Form.Label className="small fw-semibold">History of present illness (HPI)</Form.Label>
           <Form.Control as="textarea" rows={4} />
-          <Form.Text className="text-muted fst-italic">
-            (Document: Onset, location, duration, character, aggravating/relieving factors, radiation, timing,
-            severity — per NIH SOAP note format)
-          </Form.Text>
         </Form.Group>
         <p className="small fw-semibold mb-2">Relevant past medical, surgical &amp; family history</p>
-        <Row className="g-2 mb-3">
-          <Col md={4}>
-            <Form.Label className="small">Past medical history</Form.Label>
-            <Form.Control as="textarea" rows={3} />
-          </Col>
-          <Col md={4}>
-            <Form.Label className="small">Past surgical history</Form.Label>
-            <Form.Control as="textarea" rows={3} />
-          </Col>
-          <Col md={4}>
-            <Form.Label className="small">Family history</Form.Label>
-            <Form.Control as="textarea" rows={3} />
-          </Col>
-        </Row>
+        <Table bordered size="sm" className="mb-3 ds-section3-history-table ds-band-header">
+          <thead>
+            <tr>
+              <th>Past medical history</th>
+              <th>Past surgical history</th>
+              <th>Family history</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <Form.Control size="sm" as="textarea" rows={3} />
+              </td>
+              <td>
+                <Form.Control size="sm" as="textarea" rows={3} />
+              </td>
+              <td>
+                <Form.Control size="sm" as="textarea" rows={3} />
+              </td>
+            </tr>
+          </tbody>
+        </Table>
         <p className="small fw-semibold mb-2">Social &amp; occupational history</p>
-        <Row className="g-3">
-          <Col md={3}>
-            <Form.Label className="small">Tobacco use</Form.Label>
-            <Form.Select size="sm" aria-label="Tobacco use">
-              <option value="">Select the tobacco use</option>
-              <option>Yes</option>
-              <option>No</option>
-              <option>Ex</option>
-            </Form.Select>
-          </Col>
-          <Col md={3}>
-            <Form.Label className="small">Alcohol use</Form.Label>
-            <Form.Select size="sm" aria-label="Alcohol use">
-              <option value="">Select the alcohol use</option>
-              <option>Yes</option>
-              <option>No</option>
-              <option>Ex</option>
-            </Form.Select>
-          </Col>
-          <Col md={3}>
-            <Form.Label className="small">Substance use</Form.Label>
-            <Form.Select size="sm" aria-label="Substance use">
-              <option value="">Select the substance use</option>
-              <option>Yes</option>
-              <option>No</option>
-              <option>Type specified</option>
-            </Form.Select>
-          </Col>
-          <Col md={3}>
-            <Form.Label className="small">Occupation / exposure</Form.Label>
-            <Form.Control size="sm" as="textarea" rows={1} />
-          </Col>
-        </Row>
+        <Table bordered size="sm" className="mb-0 ds-band-header">
+          <thead>
+            <tr>
+              <th>Tobacco use</th>
+              <th>Alcohol use</th>
+              <th>Substance use</th>
+              <th>Occupation / exposure</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <Form.Select size="sm" aria-label="Tobacco use">
+                  <option value="">Yes / No / Ex</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Ex</option>
+                </Form.Select>
+              </td>
+              <td>
+                <Form.Select size="sm" aria-label="Alcohol use">
+                  <option value="">Yes / No / Ex</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Ex</option>
+                </Form.Select>
+              </td>
+              <td>
+                <Form.Select size="sm" aria-label="Substance use">
+                  <option value="">Yes / No / Type</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Type specified</option>
+                </Form.Select>
+              </td>
+              <td>
+                <Form.Control size="sm" as="textarea" rows={1} />
+              </td>
+            </tr>
+          </tbody>
+        </Table>
       </SectionCard>
 
       {/* SECTION 4 */}
       <SectionCard number={4} title="Clinical Examination on Admission">
-        <p className="small fw-semibold mb-2">Vital signs on admission</p>
-        <Row className="g-2 mb-3">
-          {[
-            ['Temp (°C)', 'number'],
-            ['HR (bpm)', 'number'],
-            ['BP (mmHg)', 'text'],
-            ['RR (/min)', 'number'],
-            ['SpO₂ (%)', 'number'],
-            ['GCS (E/V/M)', 'text'],
-          ].map(([label, inputType]) => (
-            <Col md={2} sm={4} key={label}>
-              <Form.Label className="small">{label}</Form.Label>
-              {inputType === 'number' ? (
-                <Form.Control size="sm" type="number" />
-              ) : (
+        <p className="small fw-semibold mb-2 ds-section4-subtitle">Vital Signs on Admission:</p>
+        <Table bordered size="sm" className="mb-3 ds-section4-vitals-table">
+          <thead>
+            <tr>
+              <th>Temp (°C)</th>
+              <th>HR (bpm)</th>
+              <th>BP (mmHg)</th>
+              <th>RR (/min)</th>
+              <th>SpO₂ (%)</th>
+              <th>GCS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
                 <Form.Control size="sm" as="textarea" rows={1} />
-              )}
-            </Col>
-          ))}
-        </Row>
-        <p className="small fw-semibold mb-2">Anthropometric measurements</p>
-        <Row className="g-2 mb-3">
-          {['Height (cm)', 'Weight (kg)', 'BMI (kg/m²)', 'BSA (m²)'].map((label) => (
-            <Col md={3} sm={6} key={label}>
-              <Form.Label className="small">{label}</Form.Label>
-              <Form.Control size="sm" type="number" step="any" />
-            </Col>
-          ))}
-        </Row>
-        <p className="small fw-semibold mb-2">Systemic examination findings</p>
-        {[
-          'Cardiovascular',
-          'Respiratory',
-          'Gastrointestinal',
-          'Neurological',
-          'Musculoskeletal',
-          'Genitourinary',
-          'Skin / lymph nodes',
-        ].map((sys) => (
-          <Form.Group key={sys} className="mb-2">
-            <Form.Label className="small">{sys}</Form.Label>
-            <Form.Control size="sm" as="textarea" rows={2} />
-          </Form.Group>
-        ))}
+              </td>
+              <td>
+                <Form.Control size="sm" as="textarea" rows={1} />
+              </td>
+              <td>
+                <Form.Control size="sm" as="textarea" rows={1} placeholder="____/____" />
+              </td>
+              <td>
+                <Form.Control size="sm" as="textarea" rows={1} />
+              </td>
+              <td>
+                <Form.Control size="sm" as="textarea" rows={1} />
+              </td>
+              <td>
+                <Form.Control size="sm" as="textarea" rows={1} placeholder="E_V_M_" />
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+
+        <p className="small fw-semibold mb-2 ds-section4-subtitle">Anthropometric Measurements:</p>
+        <Table bordered size="sm" className="mb-3 ds-section4-anthro-table">
+          <thead>
+            <tr>
+              <th>Height (cm)</th>
+              <th>Weight (kg)</th>
+              <th>BMI (kg/m²)</th>
+              <th>BSA (m²)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <Form.Control size="sm" as="textarea" rows={1} />
+              </td>
+              <td>
+                <Form.Control size="sm" as="textarea" rows={1} />
+              </td>
+              <td>
+                <Form.Control size="sm" as="textarea" rows={1} />
+              </td>
+              <td>
+                <Form.Control size="sm" as="textarea" rows={1} />
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+
+        <p className="small fw-semibold mb-2 ds-section4-subtitle">Systemic Examination Findings:</p>
+        <Table bordered size="sm" className="mb-0 ds-section4-systemic-table">
+          <tbody>
+            {[
+              'Cardiovascular',
+              'Respiratory',
+              'Gastrointestinal',
+              'Neurological',
+              'Musculoskeletal',
+              'Genitourinary',
+              'Skin / Lymph Nodes',
+            ].map((label) => (
+              <tr key={label}>
+                <td className="ds-section4-label-cell">{label}</td>
+                <td>
+                  <Form.Control size="sm" as="textarea" rows={1} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </SectionCard>
 
       {/* SECTION 5 */}
       <SectionCard number={5} title="Investigations & Diagnostic Results">
         <p className="small fw-semibold mb-2">Laboratory investigations</p>
         {/* No `responsive` wrapper: Bootstrap .table-responsive uses overflow-x:auto and clips native <select> dropdowns in the Interpretation column. */}
-        <Table bordered size="sm" className="mb-4 ds-lab-investigations-table">
-          <thead className="table-light">
+        <Table bordered size="sm" className="mb-4 ds-lab-investigations-table ds-band-header">
+          <thead>
             <tr>
               <th>Test / panel</th>
               <th>Admission value</th>
@@ -699,8 +788,8 @@ export default function DischargeSummaryFormCDC() {
         </Table>
 
         <p className="small fw-semibold mb-2">Microbiology &amp; culture reports</p>
-        <Table bordered responsive size="sm" className="mb-4">
-          <thead className="table-light">
+        <Table bordered responsive size="sm" className="mb-4 ds-band-header ds-band-firstcol">
+          <thead>
             <tr>
               <th>Specimen type</th>
               <th>Date collected</th>
@@ -723,8 +812,8 @@ export default function DischargeSummaryFormCDC() {
         </Table>
 
         <p className="small fw-semibold mb-2">Imaging &amp; diagnostic procedures</p>
-        <Table bordered responsive size="sm" className="mb-0">
-          <thead className="table-light">
+        <Table bordered responsive size="sm" className="mb-0 ds-band-header ds-band-firstcol">
+          <thead>
             <tr>
               <th>Study type</th>
               <th>Date</th>
@@ -767,8 +856,8 @@ export default function DischargeSummaryFormCDC() {
           </Form.Text>
         </Form.Group>
         <p className="small fw-semibold mb-2">Specialist consultations</p>
-        <Table bordered responsive size="sm" className="mb-3">
-          <thead className="table-light">
+        <Table bordered responsive size="sm" className="mb-3 ds-band-header ds-band-firstcol">
+          <thead>
             <tr>
               <th>Specialty</th>
               <th>Consultant name</th>
@@ -796,8 +885,8 @@ export default function DischargeSummaryFormCDC() {
           </tbody>
         </Table>
         <p className="small fw-semibold mb-2">Surgeries / Procedures Performed</p>
-        <Table bordered responsive size="sm" className="mb-3">
-          <thead className="table-light">
+        <Table bordered responsive size="sm" className="mb-3 ds-band-header">
+          <thead>
             <tr>
               <th>Procedure name</th>
               <th>Date</th>
@@ -867,8 +956,8 @@ export default function DischargeSummaryFormCDC() {
         <Alert variant="warning" className="small py-2 mb-3">
           Known allergies / adverse drug reactions — document below (none if not applicable).
         </Alert>
-        <Table bordered responsive size="sm" className="mb-3">
-          <thead className="table-light">
+        <Table bordered responsive size="sm" className="mb-3 ds-band-header ds-band-firstcol">
+          <thead>
             <tr>
               <th>Allergen / drug</th>
               <th>Type of reaction</th>
@@ -895,8 +984,8 @@ export default function DischargeSummaryFormCDC() {
         <p className="small text-muted mb-2 fst-italic">(per NHS medicines reconciliation and Joint
           Commission NPSG.03.06.01)
         </p>
-        <Table bordered responsive size="sm" className="mb-3">
-          <thead className="table-light">
+        <Table bordered responsive size="sm" className="mb-3 ds-band-header ds-band-firstcol">
+          <thead>
             <tr>
               <th style={{ width: '4%' }}>#</th>
               <th>Drug name (generic)</th>
@@ -1041,8 +1130,8 @@ export default function DischargeSummaryFormCDC() {
           <Form.Control as="textarea" rows={3} />
         </Form.Group>
         <p className="small fw-semibold mb-2">Follow-up appointments</p>
-        <Table bordered responsive size="sm" className="mb-3">
-          <thead className="table-light">
+        <Table bordered responsive size="sm" className="mb-3 ds-band-header">
+          <thead>
             <tr>
               <th>Department / clinic</th>
               <th>Physician</th>
@@ -1128,8 +1217,8 @@ export default function DischargeSummaryFormCDC() {
         <p className="small text-muted mb-2 fst-italic">
           Per CDC Healthcare-Associated Infection (HAI) Prevention and NHSN Reporting Guidelines:
         </p>
-        <Table bordered responsive size="sm" className="mb-0">
-          <thead className="table-light">
+        <Table bordered responsive size="sm" className="mb-0 ds-band-header ds-band-firstcol">
+          <thead>
             <tr>
               <th style={{ width: '48%' }}>IPC parameter</th>
               <th style={{ width: '20%' }}>Status</th>
@@ -1221,96 +1310,96 @@ export default function DischargeSummaryFormCDC() {
 
       {/* SECTION 12 */}
       <SectionCard number={12} title="Authorisation & Signatures">
-        <Row className="g-4">
-          <Col md={6}>
+        <Row className="g-0 ds-section12-grid">
+          <Col md={6} className="ds-section12-cell ds-section12-left">
             <h6 className="small fw-bold text-uppercase border-bottom pb-1 mb-5">
               Discharging physician
             </h6>
-            <Form.Group className="mb-2">
-              <Form.Label className="small">Name</Form.Label>
-              <Form.Control as="textarea" rows={1} placeholder="Dr." />
-            </Form.Group>
-            <Form.Group className="mb-2">
-              <Form.Label className="small">Reg. no.</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-            <Form.Group className="mb-2">
-              <Form.Label className="small">Department</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-            <Form.Group className="mb-2">
-              <Form.Label className="small">Signature</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label className="small">Date &amp; time</Form.Label>
-              <Form.Control type="datetime-local" />
-            </Form.Group>
+            <div className="ds-section12-line">
+              <span className="ds-section12-line-label">Name: Dr.</span>
+              <Form.Control className="ds-section12-line-input" type="text" />
+            </div>
+            <div className="ds-section12-line">
+              <span className="ds-section12-line-label">Reg. no.:</span>
+              <Form.Control className="ds-section12-line-input" type="text" />
+            </div>
+            <div className="ds-section12-line">
+              <span className="ds-section12-line-label">Department:</span>
+              <Form.Control className="ds-section12-line-input" type="text" />
+            </div>
+            <div className="ds-section12-line">
+              <span className="ds-section12-line-label">Signature:</span>
+              <Form.Control className="ds-section12-line-input" type="text" />
+            </div>
+            <div className="ds-section12-line">
+              <span className="ds-section12-line-label">Date &amp; time:</span>
+              <Form.Control className="ds-section12-line-input" type="text" placeholder="DD/MM/YYYY HH:MM" />
+            </div>
           </Col>
-          <Col md={6}>
+          <Col md={6} className="ds-section12-cell ds-section12-right-highlight">
             <h6 className="small fw-bold text-uppercase border-bottom pb-1 mb-3">
               Patient / legal guardian acknowledgement
             </h6>
             <p className="small text-muted mb-3">
               I confirm receipt of discharge instructions, medications list, and follow-up schedule.
             </p>
-            <Form.Group className="mb-2">
-              <Form.Label className="small">Name</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-            <Form.Group className="mb-2">
-              <Form.Label className="small">Relationship to patient</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-            <Form.Group className="mb-2">
-              <Form.Label className="small">Signature</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label className="small">Date &amp; time</Form.Label>
-              <Form.Control type="datetime-local" />
-            </Form.Group>
+            <div className="ds-section12-line">
+              <span className="ds-section12-line-label">Name:</span>
+              <Form.Control className="ds-section12-line-input" type="text" />
+            </div>
+            <div className="ds-section12-line">
+              <span className="ds-section12-line-label">Relationship to patient:</span>
+              <Form.Control className="ds-section12-line-input" type="text" />
+            </div>
+            <div className="ds-section12-line">
+              <span className="ds-section12-line-label">Signature:</span>
+              <Form.Control className="ds-section12-line-input" type="text" />
+            </div>
+            <div className="ds-section12-line">
+              <span className="ds-section12-line-label">Date &amp; time:</span>
+              <Form.Control className="ds-section12-line-input" type="text" placeholder="DD/MM/YYYY HH:MM" />
+            </div>
           </Col>
-          <Col md={6}>
+          <Col md={6} className="ds-section12-cell ds-section12-left">
             <h6 className="small fw-bold text-uppercase border-bottom pb-1 mb-3">
               Senior resident / registrar review
             </h6>
-            <Form.Group className="mb-2">
-              <Form.Label className="small">Name</Form.Label>
-              <Form.Control as="textarea" rows={1} placeholder="Dr." />
-            </Form.Group>
-            <Form.Group className="mb-2">
-              <Form.Label className="small">Signature</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label className="small">Date</Form.Label>
-              <Form.Control type="date" />
-            </Form.Group>
+            <div className="ds-section12-line">
+              <span className="ds-section12-line-label">Name: Dr.</span>
+              <Form.Control className="ds-section12-line-input" type="text" />
+            </div>
+            <div className="ds-section12-line">
+              <span className="ds-section12-line-label">Signature:</span>
+              <Form.Control className="ds-section12-line-input" type="text" />
+            </div>
+            <div className="ds-section12-line">
+              <span className="ds-section12-line-label">Date:</span>
+              <Form.Control className="ds-section12-line-input" type="text" placeholder="DD/MM/YYYY" />
+            </div>
           </Col>
-          <Col md={6}>
+          <Col md={6} className="ds-section12-cell ds-section12-right">
             <h6 className="small fw-bold text-uppercase border-bottom pb-1 mb-3">
               Nursing in-charge sign-off
             </h6>
-            <Form.Group className="mb-2">
-              <Form.Label className="small">Name</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-            <Form.Group className="mb-2">
-              <Form.Label className="small">Signature</Form.Label>
-              <Form.Control as="textarea" rows={2} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label className="small">Date</Form.Label>
-              <Form.Control type="date" />
-            </Form.Group>
+            <div className="ds-section12-line">
+              <span className="ds-section12-line-label">Name:</span>
+              <Form.Control className="ds-section12-line-input" type="text" />
+            </div>
+            <div className="ds-section12-line">
+              <span className="ds-section12-line-label">Signature:</span>
+              <Form.Control className="ds-section12-line-input" type="text" />
+            </div>
+            <div className="ds-section12-line">
+              <span className="ds-section12-line-label">Date:</span>
+              <Form.Control className="ds-section12-line-input" type="text" placeholder="DD/MM/YYYY" />
+            </div>
           </Col>
         </Row>
       </SectionCard>
 
       {/* SECTION 13 */}
       <SectionCard number={13} title="Administrative & Records Management">
-        <Table bordered responsive size="sm" className="mb-0">
+        <Table bordered responsive size="sm" className="mb-0 ds-band-header ds-band-firstcol">
           <thead className="table-light">
             <tr>
               <th>Document / record</th>
@@ -1364,9 +1453,8 @@ export default function DischargeSummaryFormCDC() {
         <Card.Body className="small text-muted">
           <h5 className="fw-semibold text-body mb-2 text-uppercase">Regulatory Compliance Declaration</h5>
           <p className="mb-2 fw-semibold fst-italic">
-            This document aligns with: CDC NHSN surveillance standards | NHS England discharge
-            planning guidelines | NIH clinical documentation best practices | ICD-10-CM/PCS |
-            Joint Commission NPSG Requirements.
+          This document complies with: CDC NHSN Surveillance Standards (2024)  |  NHS England Discharge Planning Guidelines (2023)  |  NIH Clinical Documentation Best Practices  |  ICD-10-CM/PCS (FY2025 Edition)  |  Joint Commission NPSG Requirements
+
           </p>
           <p className="mb-0">
             Data privacy: processed under applicable patient data protection law (HIPAA / GDPR /

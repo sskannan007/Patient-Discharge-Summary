@@ -113,7 +113,16 @@ export function mirrorFormFieldsForHtml2CanvasClone(root) {
     toEl.style.boxSizing = 'border-box';
     toEl.style.width = w;
     toEl.style.maxWidth = '100%';
-    toEl.style.minHeight = cs.minHeight;
+    const measuredHeight =
+      (fromEl.scrollHeight && fromEl.scrollHeight > 4 && fromEl.scrollHeight) ||
+      (fromEl.offsetHeight && fromEl.offsetHeight > 4 && fromEl.offsetHeight) ||
+      parseFloat(cs.height) ||
+      parseFloat(cs.minHeight) ||
+      0;
+    if (measuredHeight) {
+      toEl.style.minHeight = `${measuredHeight}px`;
+      toEl.style.height = `${measuredHeight}px`;
+    }
     toEl.style.padding = cs.padding;
     toEl.style.borderWidth = cs.borderWidth;
     toEl.style.borderStyle = cs.borderStyle;

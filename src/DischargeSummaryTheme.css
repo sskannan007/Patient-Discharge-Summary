@@ -10,8 +10,9 @@
   --ds-slate: #3d4f5f;
   --ds-muted: #5c6d7d;
   --ds-paper: #ffffff;
-  --ds-paper-warm: #fbf9f6;
-  --ds-paper-tint: #f3f6fa;
+  /* Plain white fields/paper to match PDF form */
+  --ds-paper-warm: #ffffff;
+  --ds-paper-tint: #ffffff;
   --ds-rule: #c8d4e0;
   --ds-rule-strong: #8fa3b6;
   --ds-accent: #0b5cab;
@@ -34,30 +35,27 @@
   min-height: 100vh;
   font-family: var(--ds-font-sans);
   color: var(--ds-slate);
-  background: linear-gradient(
-    165deg,
-    #dfe8f2 0%,
-    #e8eef6 28%,
-    #f2f5fa 55%,
-    #e5ecf4 100%
-  );
-  background-attachment: fixed;
+  /* Plain white canvas to match PDF (no gradients) */
+  background: #ffffff;
+  background-attachment: scroll;
 }
 
 .ds-print-inner {
   position: relative;
   color-scheme: light;
+  border: 1px solid #ccc;
+  margin: 30px auto;
 }
 
 /* Masthead — navy “letterhead” + gold rule like official PDFs */
 .ds-masthead {
-  border-radius: var(--ds-radius);
-  box-shadow: var(--ds-shadow);
+  /* border-radius: var(--ds-radius);
+  box-shadow: var(--ds-shadow); */
   background: var(--ds-paper);
   overflow: hidden;
 }
 
-.ds-masthead__accent-bar {
+/* .ds-masthead__accent-bar {
   height: 5px;
   background: linear-gradient(
     90deg,
@@ -65,15 +63,15 @@
     var(--ds-gold-soft) 35%,
     var(--ds-navy-mid) 100%
   );
-}
+} */
 
 .ds-masthead__ribbon {
-  background: linear-gradient(
+  /* background: linear-gradient(
     135deg,
     var(--ds-navy) 0%,
     var(--ds-navy-mid) 45%,
     var(--ds-navy-light) 100%
-  );
+  ); */
   color: #f0f4f8;
   margin: 0;
   padding: 1.25rem 1.5rem 1.5rem;
@@ -84,19 +82,20 @@
   font-weight: 700;
   font-size: 1.15rem;
   letter-spacing: 0.04em;
-  color: #fff;
+  color: var(--ds-navy);
   line-height: 1.35;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .ds-masthead__dept {
   font-size: 0.8125rem;
-  color: rgba(255, 255, 255, 0.82);
+  color: #000 !important;
   margin-top: 0.35rem;
 }
 
 .ds-masthead__badge-wrap {
   text-align: right;
+  color: #000;
 }
 
 @media (max-width: 767.98px) {
@@ -116,11 +115,11 @@
 
 .ds-masthead__meta {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.75);
+  color: #000 !important;
 }
 
 .ds-masthead__title-block {
-  background: var(--ds-paper-warm);
+  background: var(--ds-navy-mid);
   padding: 1.25rem 1.5rem 1.5rem;
   border-top: 1px solid var(--ds-rule);
 }
@@ -130,23 +129,28 @@
   font-weight: 700;
   font-size: 1.65rem;
   letter-spacing: 0.12em;
-  color: var(--ds-navy);
+  color: #fff;
   margin: 0;
 }
 
 .ds-masthead__subtitle {
   font-size: 0.8125rem;
-  color: var(--ds-muted);
-  margin: 0.5rem 0 0;
+  color: #fff;
+  margin: 0.5rem 0 0.25rem;
 }
 
-.ds-masthead__compliance {
+.ds-masthead__confidential-line {
   font-size: 0.75rem;
-  color: var(--ds-accent);
-  font-weight: 600;
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px dashed var(--ds-rule);
+  color: #fff;
+  margin-top: 0.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.ds-masthead__confidential-sep {
+  opacity: 0.6;
 }
 
 /* Subtitle under masthead */
@@ -166,13 +170,13 @@
   color: var(--ds-navy-mid);
 }
 
-/* Section cards */
+/* Section blocks (flat, continuous like PDF – no separate rounded boxes) */
 .ds-section-card {
-  border: 1px solid var(--ds-rule);
-  border-radius: var(--ds-radius);
-  box-shadow: var(--ds-shadow-sm);
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
   background: var(--ds-paper);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .ds-section-card__header {
@@ -180,17 +184,61 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #fff;
-  background: linear-gradient(
-    90deg,
-    var(--ds-navy-mid) 0%,
-    var(--ds-navy-light) 100%
-  );
-  border-bottom: 2px solid var(--ds-gold-soft);
+  color: var(--ds-navy-mid);
+  border-radius: 0 !important;
+  border-bottom: 1px solid #0f2744 !important;
 }
 
 .ds-section-card__body {
-  background: linear-gradient(180deg, var(--ds-paper) 0%, var(--ds-paper-tint) 100%);
+  background: var(--ds-paper);
+}
+
+/* SECTION 12 grid styling to mimic 2×2 table with right-top shaded cell */
+.ds-section12-grid {
+  border: 1px solid var(--ds-rule);
+}
+
+.ds-section12-cell {
+  border-right: 1px solid var(--ds-rule);
+  border-bottom: 1px solid var(--ds-rule);
+  padding: 1rem 1.25rem;
+}
+
+.ds-section12-grid > .ds-section12-cell:nth-child(2n) {
+  border-right: none;
+}
+
+.ds-section12-grid > .ds-section12-cell:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
+
+.ds-section12-right-highlight {
+  background-color: #e5f4fb;
+}
+
+.ds-section12-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+}
+
+.ds-section12-line-label {
+  white-space: nowrap;
+}
+
+.ds-section12-line-input {
+  border: none;
+  border-bottom: 1px solid var(--ds-rule-strong);
+  border-radius: 0;
+  padding: 0 0 0.1rem 0;
+  min-height: 1.2rem;
+}
+
+.ds-section12-line-input:focus {
+  border-bottom-color: var(--ds-accent);
+  box-shadow: none;
 }
 
 /* Form controls */
@@ -202,9 +250,9 @@
 
 .ds-print-inner .form-control,
 .ds-print-inner .form-select {
-  border-radius: var(--ds-radius-sm);
+  /* border-radius: var(--ds-radius-sm); */
   border-color: var(--ds-rule);
-  background-color: var(--ds-paper-warm);
+  background-color: var(--ds-paper);
   transition:
     border-color 0.18s ease,
     box-shadow 0.18s ease,
@@ -214,7 +262,6 @@
 .ds-print-inner .form-control:hover,
 .ds-print-inner .form-select:hover {
   border-color: var(--ds-rule-strong);
-  background-color: #fff;
 }
 
 .ds-print-inner .form-control:focus,
@@ -223,7 +270,43 @@
   box-shadow:
     0 0 0 0.2rem var(--ds-accent-soft),
     inset 0 1px 2px rgba(15, 39, 68, 0.04);
-  background-color: #fff;
+}
+
+/* SECTION 1 table-style layout to match PDF grid */
+.ds-section1-table {
+  width: 100%;
+}
+
+.ds-section1-table td {
+  padding: 0.35rem 0.6rem;
+}
+
+.ds-section1-table .ds-section1-label-cell {
+  width: 22%;
+  background-color: #ddebf7; /* light blue band like PDF */
+  color: #1f4e79;
+  font-weight: 600;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.ds-section1-table .ds-section1-value-cell {
+  width: 28%;
+  background-color: #ffffff;
+}
+
+.ds-section1-table .ds-section1-inline-note {
+  font-size: 0.75rem;
+  color: var(--ds-muted);
+}
+
+.ds-section1-table .ds-section1-split-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.ds-section1-table .ds-section1-split-row > * {
+  flex: 1 1 0;
 }
 
 /* —— Dropdowns (select) —— */
@@ -351,6 +434,49 @@
 
 .ds-print-inner .table-bordered > :not(caption) > * > * {
   border-color: var(--ds-rule);
+}
+
+/* Generic navy header band for section tables (matches PDF header rows) */
+.ds-print-inner .ds-band-header thead th {
+  background-color: var(--ds-navy-mid);
+  color: #ffffff;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* First column uses same background as table body (no blue fill) */
+.ds-print-inner .ds-band-firstcol tbody tr td:first-child {
+  background-color: transparent;
+  font-weight: 600;
+}
+
+/* SECTION 3 history table */
+.ds-section3-history-table th {
+  text-align: center;
+}
+
+/* SECTION 4 styling to match PDF */
+.ds-section4-subtitle {
+  color: #0070c0;
+}
+
+.ds-section4-vitals-table thead th,
+.ds-section4-anthro-table thead th {
+  background-color: var(--ds-navy-mid);
+  color: #ffffff;
+  text-align: center;
+  font-weight: 600;
+}
+
+.ds-section4-vitals-table td,
+.ds-section4-anthro-table td {
+  vertical-align: middle;
+}
+
+.ds-section4-systemic-table .ds-section4-label-cell {
+  width: 22%;
+  background-color: #ddebf7;
+  font-weight: 600;
 }
 
 /* Marker class for lab investigations table (not wrapped in .table-responsive — see JSX). */
