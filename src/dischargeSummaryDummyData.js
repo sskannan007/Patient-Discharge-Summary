@@ -157,6 +157,36 @@ export function applyDummyDataToDischargeForm(root) {
   setTextareaNearLabel('Emergency contact', TEXT_INPUTS[5]);
   setTextareaNearLabel('Relationship', TEXT_INPUTS[6]);
 
+  /**
+   * Generic input/textarea fill above assigns random TEXT_INPUTS to date fields (DOB, admission, …),
+   * which breaks POST /api/discharge/save-new. Override all data-ds-field Section 1 values with parseable demo data.
+   */
+  const setDs = (field, value) => {
+    const el = root.querySelector(`[data-ds-field="${field}"]`);
+    if (el && 'value' in el) {
+      el.value = value;
+      fire(el);
+    }
+  };
+  const stamp = Date.now().toString(36).toUpperCase();
+  setDs('s1-patient-name', 'Demo Patient');
+  setDs('s1-mrn', `MRN-DEMO-${stamp}`);
+  setDs('s1-dob', '1980-06-15');
+  setDs('s1-age', '45');
+  setDs('s1-gender', 'Male');
+  setDs('s1-aadhaar', 'XXXX-XXXX-1234');
+  setDs('s1-address', TEXT_INPUTS[4]);
+  setDs('s1-emergency-name', TEXT_INPUTS[5]);
+  setDs('s1-emergency-phone', '+91 98765 43210');
+  setDs('s1-admission', '2026-03-10T09:00');
+  setDs('s1-discharge', '2026-03-16T11:00');
+  setDs('s1-los', '6 days');
+  setDs('s1-ward', 'Ward 3B / Bed 12');
+  setDs('s1-mode', 'Emergency');
+  setDs('s1-discharge-type', 'Routine');
+  setDs('s1-admitting', 'Dr. Ananya Sharma');
+  setDs('s1-discharging', 'Dr. Vikram Iyer');
+
   resizeAllTextareasIn(root);
 }
 

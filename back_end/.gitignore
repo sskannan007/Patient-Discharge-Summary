@@ -1,0 +1,30 @@
+# Virtual Environment
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+ENV/
+
+# Secrets (also ignored from repo root `.env` rule)
+.env
+.env.*
+
+# Large data / local DB dumps — do not commit
+dump.sql
+*.dump
+
+# Large data files
+*.json
+*.csv
+*.db
+discharge_summary_export.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

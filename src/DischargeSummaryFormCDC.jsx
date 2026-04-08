@@ -5,7 +5,7 @@
  *   import 'bootstrap/dist/css/bootstrap.min.css';
  */
 
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { forwardRef, useCallback, useImperativeHandle, useLayoutEffect, useRef } from 'react';
 import {
   Container,
   Row,
@@ -15,10 +15,9 @@ import {
   Card,
   Badge,
   Alert,
-  Button,
 } from 'react-bootstrap';
 import html2pdf from 'html2pdf.js';
-import { applyDummyDataToDischargeForm } from './dischargeSummaryDummyData';
+import { applyDischargeApiToForm } from './applyDischargeApiToForm';
 import {
   attachTextareaAutoResize,
   mirrorFormFieldsForHtml2CanvasClone,
@@ -184,7 +183,7 @@ function LabRow({ test, refRange, interpretationOptions }) {
   );
 }
 
-export default function DischargeSummaryFormCDC() {
+const DischargeSummaryFormCDC = forwardRef(function DischargeSummaryFormCDC({ apiDocument = null }, ref) {
   const printRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -193,16 +192,20 @@ export default function DischargeSummaryFormCDC() {
     return attachTextareaAutoResize(root);
   }, []);
 
-  const handlePrint = () => {
+  useLayoutEffect(() => {
+    const root = printRef.current;
+    if (!root || !apiDocument?.sections) return undefined;
+    applyDischargeApiToForm(root, apiDocument);
+    resizeAllTextareasIn(root);
+    return undefined;
+  }, [apiDocument]);
+
+  const handlePrint = useCallback(() => {
     resizeAllTextareasIn(printRef.current);
     window.print();
-  };
+  }, []);
 
-  const handleFillDummyData = () => {
-    applyDummyDataToDischargeForm(printRef.current);
-  };
-
-  const handleDownloadPdf = () => {
+  const handleDownloadPdf = useCallback(() => {
     const el = printRef.current;
     if (!el) return;
     resizeAllTextareasIn(el);
@@ -274,7 +277,16 @@ export default function DischargeSummaryFormCDC() {
           .finally(() => el.classList.remove('ds-pdf-capture'));
       });
     });
-  };
+  }, []);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      print: handlePrint,
+      downloadPdf: handleDownloadPdf,
+    }),
+    [handlePrint, handleDownloadPdf]
+  );
 
   return (
     <div className="ds-app-shell">
@@ -324,16 +336,27 @@ export default function DischargeSummaryFormCDC() {
 
       {/* SECTION 1 — table grid, matches PDF layout */}
       <SectionCard number={1} title="Patient Identification & Admission Details">
+        <div className="table-responsive ds-section1-table-wrap">
         <Table bordered size="sm" className="mb-0 ds-section1-table">
           <tbody>
             <tr>
               <td className="ds-section1-label-cell">Patient Name</td>
               <td className="ds-section1-value-cell">
-                <Form.Control size="sm" as="textarea" rows={1} />
+                <Form.Control size="sm" as="textarea" rows={1} data-ds-field="s1-patient-name" />
               </td>
               <td className="ds-section1-label-cell">MRN / Hospital ID</td>
               <td className="ds-section1-value-cell">
-                <Form.Control size="sm" as="textarea" rows={1} />
+                <Form.Control
+                  size="sm"
+                  as="textarea"
+                  rows={1}
+                  data-ds-field="s1-mrn"
+                  placeholder="MRN-1001"
+                  aria-label="MRN or Hospital ID"
+                />
+                {/* <Form.Text className="small mb-0 mt-1 d-print-none" muted>
+                  Type the full MRN with digits (e.g. MRN-1001). Do not leave only &quot;MRN-&quot;.
+                </Form.Text> */}
               </td>
             </tr>
             <tr>
@@ -341,9 +364,11 @@ export default function DischargeSummaryFormCDC() {
               <td className="ds-section1-value-cell">
                 <Form.Control
                   size="sm"
-                  type="text"
-                  placeholder="DD / MM / YYYY"
+                  type="date"
                   aria-label="Date of birth"
+                  data-ds-field="s1-dob"
+                  title="Pick date of birth"
+                  className="ds-date-field"
                 />
               </td>
               <td className="ds-section1-label-cell">Age / Gender</td>
@@ -354,12 +379,14 @@ export default function DischargeSummaryFormCDC() {
                     type="text"
                     placeholder="___ yrs"
                     aria-label="Age in years"
+                    data-ds-field="s1-age"
                   />
                   <Form.Control
                     size="sm"
                     type="text"
                     placeholder="M / F / Other"
                     aria-label="Gender"
+                    data-ds-field="s1-gender"
                   />
                 </div>
               </td>
@@ -367,7 +394,7 @@ export default function DischargeSummaryFormCDC() {
             <tr>
               <td className="ds-section1-label-cell">National ID / Aadhaar</td>
               <td className="ds-section1-value-cell">
-                <Form.Control size="sm" as="textarea" rows={1} />
+                <Form.Control size="sm" as="textarea" rows={1} data-ds-field="s1-aadhaar" />
               </td>
               <td className="ds-section1-label-cell">Insurance / Payer ID</td>
               <td className="ds-section1-value-cell">
@@ -377,7 +404,7 @@ export default function DischargeSummaryFormCDC() {
             <tr>
               <td className="ds-section1-label-cell">Address</td>
               <td className="ds-section1-value-cell" colSpan={3}>
-                <Form.Control size="sm" as="textarea" rows={2} />
+                <Form.Control size="sm" as="textarea" rows={2} data-ds-field="s1-address" />
               </td>
             </tr>
             <tr>
@@ -389,6 +416,7 @@ export default function DischargeSummaryFormCDC() {
                   rows={1}
                   placeholder="Name"
                   aria-label="Emergency contact name"
+                  data-ds-field="s1-emergency-name"
                 />
               </td>
               <td className="ds-section1-label-cell">Relationship / Phone</td>
@@ -406,6 +434,7 @@ export default function DischargeSummaryFormCDC() {
                     type="tel"
                     placeholder="Phone"
                     aria-label="Emergency contact phone"
+                    data-ds-field="s1-emergency-phone"
                   />
                 </div>
               </td>
@@ -415,18 +444,22 @@ export default function DischargeSummaryFormCDC() {
               <td className="ds-section1-value-cell">
                 <Form.Control
                   size="sm"
-                  type="text"
-                  placeholder="DD/MM/YYYY HH:MM"
+                  type="datetime-local"
                   aria-label="Admission date and time"
+                  data-ds-field="s1-admission"
+                  title="Use the calendar control, or type YYYY-MM-DD HH:MM"
+                  className="ds-datetime-field"
                 />
               </td>
               <td className="ds-section1-label-cell">Discharge Date &amp; Time</td>
               <td className="ds-section1-value-cell">
                 <Form.Control
                   size="sm"
-                  type="text"
-                  placeholder="DD/MM/YYYY HH:MM"
+                  type="datetime-local"
                   aria-label="Discharge date and time"
+                  data-ds-field="s1-discharge"
+                  title="Use the calendar control, or type YYYY-MM-DD HH:MM"
+                  className="ds-datetime-field"
                 />
               </td>
             </tr>
@@ -438,6 +471,7 @@ export default function DischargeSummaryFormCDC() {
                   type="text"
                   placeholder="___ / ___ / ___"
                   aria-label="Ward unit bed number"
+                  data-ds-field="s1-ward"
                 />
               </td>
               <td className="ds-section1-label-cell">Total Length of Stay</td>
@@ -447,17 +481,18 @@ export default function DischargeSummaryFormCDC() {
                   type="text"
                   placeholder="___ days"
                   aria-label="Total length of stay in days"
+                  data-ds-field="s1-los"
                 />
               </td>
             </tr>
             <tr>
               <td className="ds-section1-label-cell">Admitting Physician</td>
               <td className="ds-section1-value-cell">
-                <Form.Control size="sm" as="textarea" rows={1} />
+                <Form.Control size="sm" as="textarea" rows={1} data-ds-field="s1-admitting" />
               </td>
               <td className="ds-section1-label-cell">Discharging Physician</td>
               <td className="ds-section1-value-cell">
-                <Form.Control size="sm" as="textarea" rows={1} />
+                <Form.Control size="sm" as="textarea" rows={1} data-ds-field="s1-discharging" />
               </td>
             </tr>
             <tr>
@@ -469,6 +504,7 @@ export default function DischargeSummaryFormCDC() {
                   rows={1}
                   placeholder="Emergency / Elective / Transfer / OPD Referral"
                   aria-label="Mode of admission"
+                  data-ds-field="s1-mode"
                 />
               </td>
               <td className="ds-section1-label-cell">Discharge Type</td>
@@ -479,11 +515,13 @@ export default function DischargeSummaryFormCDC() {
                   rows={1}
                   placeholder="Routine / LAMA / Transfer / Expired"
                   aria-label="Discharge type"
+                  data-ds-field="s1-discharge-type"
                 />
               </td>
             </tr>
           </tbody>
         </Table>
+        </div>
       </SectionCard>
 
       {/* SECTION 2 */}
@@ -512,7 +550,12 @@ export default function DischargeSummaryFormCDC() {
               <tr key={label}>
                 <td className="small align-middle fw-semibold">{label}</td>
                 <td>
-                  <Form.Control size="sm" as="textarea" rows={1} />
+                  <Form.Control
+                    size="sm"
+                    as="textarea"
+                    rows={1}
+                    {...(label === 'Primary Diagnosis' ? { 'data-ds-field': 's2-primary-line' } : {})}
+                  />
                 </td>
                 <td className="small text-muted align-middle">{type}</td>
               </tr>
@@ -525,11 +568,11 @@ export default function DischargeSummaryFormCDC() {
       <SectionCard number={3} title="Presenting Complaint & History of Present Illness">
         <Form.Group className="mb-3">
           <Form.Label className="small fw-semibold">Chief complaint (CC)</Form.Label>
-          <Form.Control as="textarea" rows={2} />
+          <Form.Control as="textarea" rows={2} data-ds-field="s3-cc" />
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label className="small fw-semibold">History of present illness (HPI)</Form.Label>
-          <Form.Control as="textarea" rows={4} />
+          <Form.Control as="textarea" rows={4} data-ds-field="s3-hpi" />
         </Form.Group>
         <p className="small fw-semibold mb-2">Relevant past medical, surgical &amp; family history</p>
         <Table bordered size="sm" className="mb-3 ds-section3-history-table ds-band-header">
@@ -567,31 +610,31 @@ export default function DischargeSummaryFormCDC() {
           <tbody>
             <tr>
               <td>
-                <Form.Select size="sm" aria-label="Tobacco use">
+                <Form.Select size="sm" aria-label="Tobacco use" data-ds-field="s3-tobacco">
                   <option value="">Yes / No / Ex</option>
-                  <option>Yes</option>
-                  <option>No</option>
-                  <option>Ex</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="Ex">Ex</option>
                 </Form.Select>
               </td>
               <td>
-                <Form.Select size="sm" aria-label="Alcohol use">
+                <Form.Select size="sm" aria-label="Alcohol use" data-ds-field="s3-alcohol">
                   <option value="">Yes / No / Ex</option>
-                  <option>Yes</option>
-                  <option>No</option>
-                  <option>Ex</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="Ex">Ex</option>
                 </Form.Select>
               </td>
               <td>
-                <Form.Select size="sm" aria-label="Substance use">
+                <Form.Select size="sm" aria-label="Substance use" data-ds-field="s3-substance">
                   <option value="">Yes / No / Type</option>
-                  <option>Yes</option>
-                  <option>No</option>
-                  <option>Type specified</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="Type specified">Type specified</option>
                 </Form.Select>
               </td>
               <td>
-                <Form.Control size="sm" as="textarea" rows={1} />
+                <Form.Control size="sm" as="textarea" rows={1} data-ds-field="s3-occupation" />
               </td>
             </tr>
           </tbody>
@@ -615,7 +658,7 @@ export default function DischargeSummaryFormCDC() {
           <tbody>
             <tr>
               <td>
-                <Form.Control size="sm" as="textarea" rows={1} />
+                <Form.Control size="sm" as="textarea" rows={1} data-ds-field="s4-vitals-combined" />
               </td>
               <td>
                 <Form.Control size="sm" as="textarea" rows={1} />
@@ -649,16 +692,16 @@ export default function DischargeSummaryFormCDC() {
           <tbody>
             <tr>
               <td>
-                <Form.Control size="sm" as="textarea" rows={1} />
+                <Form.Control size="sm" as="textarea" rows={1} data-ds-field="s4-height" />
               </td>
               <td>
-                <Form.Control size="sm" as="textarea" rows={1} />
+                <Form.Control size="sm" as="textarea" rows={1} data-ds-field="s4-weight" />
               </td>
               <td>
-                <Form.Control size="sm" as="textarea" rows={1} />
+                <Form.Control size="sm" as="textarea" rows={1} data-ds-field="s4-bmi" />
               </td>
               <td>
-                <Form.Control size="sm" as="textarea" rows={1} />
+                <Form.Control size="sm" as="textarea" rows={1} data-ds-field="s4-bsa" />
               </td>
             </tr>
           </tbody>
@@ -679,7 +722,12 @@ export default function DischargeSummaryFormCDC() {
               <tr key={label}>
                 <td className="ds-section4-label-cell">{label}</td>
                 <td>
-                  <Form.Control size="sm" as="textarea" rows={1} />
+                  <Form.Control
+                    size="sm"
+                    as="textarea"
+                    rows={1}
+                    {...(label === 'Cardiovascular' ? { 'data-ds-field': 's4-systemic-combined' } : {})}
+                  />
                 </td>
               </tr>
             ))}
@@ -849,7 +897,7 @@ export default function DischargeSummaryFormCDC() {
       <SectionCard number={6} title="Clinical Course & Management During Hospitalization">
         <Form.Group className="mb-3">
           <Form.Label className="small fw-semibold">Summary of Hospital Course</Form.Label>
-          <Form.Control as="textarea" rows={5} />
+          <Form.Control as="textarea" rows={5} data-ds-field="s6-course" />
           <Form.Text className="text-muted fst-italic">
             (Describe chronological course of illness, response to treatment, complications, consultations, procedures performed, ICU/HDU stay if
               applicable)
@@ -1035,20 +1083,30 @@ export default function DischargeSummaryFormCDC() {
         <Row className="g-3 mb-3">
           <Col md={4}>
             <Form.Label className="small fw-semibold">General condition</Form.Label>
-            <Form.Select aria-label="General condition">
+            <Form.Select aria-label="General condition" data-ds-field="s8-general-condition">
               <option value="">Select the general condition</option>
-              <option>Stable</option>
-              <option>Improving</option>
-              <option>Critical</option>
+              <option value="Stable">Stable</option>
+              <option value="Improving">Improving</option>
+              <option value="Critical">Critical</option>
             </Form.Select>
           </Col>
           <Col md={4}>
             <Form.Label className="small fw-semibold">Vital signs at discharge</Form.Label>
-            <Form.Control as="textarea" rows={2} placeholder="BP / HR / SpO₂" />
+            <Form.Control
+              as="textarea"
+              rows={2}
+              placeholder="BP / HR / SpO₂"
+              data-ds-field="s8-functional-combined"
+            />
           </Col>
           <Col md={4}>
             <Form.Label className="small fw-semibold">Wound / drain status</Form.Label>
-            <Form.Control as="textarea" rows={2} placeholder="Healed / healing / open / drain in situ" />
+            <Form.Control
+              as="textarea"
+              rows={2}
+              placeholder="Healed / healing / open / drain in situ"
+              data-ds-field="s8-wound"
+            />
           </Col>
         </Row>
         <p className="small fw-semibold mb-2">Functional &amp; nutritional status</p>
@@ -1127,7 +1185,7 @@ export default function DischargeSummaryFormCDC() {
         </div>
         <Form.Group className="mb-3">
           <Form.Label className="small fw-semibold">Activity &amp; Dietary Restrictions</Form.Label>
-          <Form.Control as="textarea" rows={3} />
+          <Form.Control as="textarea" rows={3} data-ds-field="s9-activity" />
         </Form.Group>
         <p className="small fw-semibold mb-2">Follow-up appointments</p>
         <Table bordered responsive size="sm" className="mb-3 ds-band-header">
@@ -1464,30 +1522,8 @@ export default function DischargeSummaryFormCDC() {
       </Card>
         </Container>
       </div>
-
-      <Container
-        fluid
-        className="d-print-none pb-5 px-3"
-        style={{ maxWidth: '1200px' }}
-      >
-        <div className="ds-action-bar py-4 px-4 text-center">
-          <div className="d-flex flex-wrap gap-2 justify-content-center mb-2">
-            <Button variant="secondary" size="lg" type="button" onClick={handleFillDummyData}>
-              Fill sample (demo) data
-            </Button>
-            <Button variant="primary" size="lg" type="button" onClick={handlePrint}>
-              Print
-            </Button>
-            <Button variant="outline-primary" size="lg" type="button" onClick={handleDownloadPdf}>
-              Download PDF
-            </Button>
-          </div>
-          <span className="text-muted small text-center text-md-start" style={{ maxWidth: '28rem' }}>
-            Download PDF applies the same layout rules as print (full-width grid, field borders, white
-            background). You can also use Print → Save as PDF for a browser-native copy.
-          </span>
-        </div>
-      </Container>
     </div>
   );
-}
+});
+
+export default DischargeSummaryFormCDC;

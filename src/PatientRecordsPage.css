@@ -1,0 +1,465 @@
+@import './DischargeSummaryTheme.css';
+
+.ds-records-page {
+  min-height: 100vh;
+  font-family: var(--ds-font-sans, system-ui, sans-serif);
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(11, 92, 171, 0.06), transparent 50%),
+    linear-gradient(180deg, #f4f7fb 0%, #eef2f7 40%, #e8edf4 100%);
+  color: var(--ds-slate, #3d4f5f);
+}
+
+/* ——— Header ——— (pinned to viewport top while scrolling) */
+.ds-records-page__header {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  background: linear-gradient(135deg, #0a1f38 0%, var(--ds-navy, #0f2744) 42%, #152f4d 100%);
+  border-bottom: 3px solid var(--ds-gold, #b8860b);
+  color: #e8eef4;
+  padding: 1.25rem 1.5rem 1.5rem;
+  box-shadow: 0 4px 24px rgba(15, 39, 68, 0.25);
+}
+
+.ds-records-page__header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.ds-records-page__title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.ds-records-page__title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+}
+
+.ds-records-page__nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.9rem 0.45rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #f0f6fc !important;
+  text-decoration: none !important;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.ds-records-page__nav-back:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff !important;
+  transform: translateX(-1px);
+}
+
+.ds-records-page__nav-back-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+  opacity: 0.95;
+  margin-top: -1px;
+}
+
+.ds-records-page__title {
+  font-size: clamp(1.35rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.ds-records-page__subtitle {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  opacity: 0.88;
+  max-width: 40rem;
+  color: rgba(232, 238, 244, 0.92);
+}
+
+/* ——— Body & toolbar ——— */
+.ds-records-page__body {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.ds-records-page__alert {
+  border-radius: var(--ds-radius, 10px);
+  border: none;
+  box-shadow: var(--ds-shadow-sm, 0 2px 12px rgba(15, 39, 68, 0.08));
+}
+
+.ds-records-page__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.ds-records-page__search-wrap {
+  position: relative;
+  flex: 1 1 280px;
+  min-width: 0;
+  max-width: 640px;
+  width: 100%;
+}
+
+.ds-records-page__search-icon {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--ds-muted, #5c6d7d);
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.ds-records-page__search-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  flex-shrink: 0;
+}
+
+.ds-records-page__search {
+  padding: 0.65rem 1rem 0.65rem 2.75rem !important;
+  font-size: 0.9375rem;
+  border: 1px solid rgba(143, 163, 182, 0.5);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(15, 39, 68, 0.06);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  min-height: 2.75rem;
+  box-sizing: border-box;
+}
+
+.ds-records-page__search:focus {
+  border-color: var(--ds-accent, #0b5cab);
+  box-shadow: 0 0 0 3px var(--ds-accent-soft, rgba(11, 92, 171, 0.12));
+  outline: none;
+}
+
+.ds-records-page__meta {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--ds-muted, #5c6d7d);
+  flex: 0 0 auto;
+}
+
+.ds-records-page__meta strong {
+  color: var(--ds-navy-mid, #1a3a5c);
+  font-weight: 600;
+}
+
+/* ——— Card + table ——— */
+.ds-records-page__card {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid rgba(143, 163, 182, 0.35);
+  box-shadow:
+    0 1px 2px rgba(15, 39, 68, 0.04),
+    0 12px 40px rgba(15, 39, 68, 0.08);
+  overflow: hidden;
+}
+
+/*
+ * Scroll area: no layout shift when scrollbar appears.
+ * - WebKit: fixed scrollbar width; thumb/track transparent until hover (width never changes).
+ * - overlay: where supported, scrollbar paints over content instead of reserving a new gutter.
+ * - Firefox: thin scrollbar + transparent colors until hover.
+ */
+.ds-records-page__table-scroll {
+  overflow: auto;
+  overflow: overlay; /* Chrome/Edge/Safari: overlay scrollbar — no table reflow */
+  max-height: min(72vh, 680px);
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.ds-records-page__table-scroll:hover {
+  scrollbar-color: rgba(26, 58, 92, 0.45) rgba(15, 39, 68, 0.08);
+}
+
+/* WebKit: constant width so showing the thumb never changes layout */
+.ds-records-page__table-scroll::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.ds-records-page__table-scroll::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 999px;
+  margin: 6px 0;
+}
+
+.ds-records-page__table-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.ds-records-page__table-scroll:hover::-webkit-scrollbar-track {
+  background: rgba(15, 39, 68, 0.06);
+}
+
+.ds-records-page__table-scroll:hover::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(26, 58, 92, 0.45) 0%, rgba(15, 39, 68, 0.5) 100%);
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  background-clip: padding-box;
+}
+
+.ds-records-page__table-scroll:hover::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(11, 92, 171, 0.55) 0%, rgba(15, 39, 68, 0.65) 100%);
+}
+
+.ds-records-page__table-scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Touch / no fine pointer: always show styled scrollbar */
+@media (hover: none), (pointer: coarse) {
+  .ds-records-page__table-scroll {
+    scrollbar-color: rgba(26, 58, 92, 0.42) rgba(15, 39, 68, 0.08);
+  }
+
+  .ds-records-page__table-scroll::-webkit-scrollbar-track {
+    background: rgba(15, 39, 68, 0.06);
+  }
+
+  .ds-records-page__table-scroll::-webkit-scrollbar-thumb {
+    background: rgba(26, 58, 92, 0.42);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    background-clip: padding-box;
+  }
+}
+
+.ds-records-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.8125rem;
+}
+
+.ds-records-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 0.85rem 0.75rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.92);
+  background: linear-gradient(180deg, #1a3352 0%, #0f2744 100%);
+  border: none;
+  border-bottom: 2px solid var(--ds-gold, #b8860b);
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.ds-records-table thead th:first-child {
+  padding-left: 1rem;
+}
+
+.ds-records-table thead th:last-child {
+  padding-right: 1rem;
+}
+
+.ds-records-table tbody td {
+  padding: 0.7rem 0.75rem;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(200, 212, 224, 0.65);
+  background: #fff;
+  transition: background 0.15s ease;
+}
+
+.ds-records-table tbody tr:nth-child(even) td {
+  background: #f8fafc;
+}
+
+.ds-records-table tbody tr:hover td {
+  background: #eef3fb !important;
+}
+
+.ds-records-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.ds-records-table tbody td:first-child {
+  padding-left: 1rem;
+}
+
+.ds-records-table tbody td:last-child {
+  padding-right: 1rem;
+}
+
+.ds-records-cell-id {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ds-navy-mid, #1a3a5c);
+}
+
+.ds-records-cell-name {
+  font-weight: 500;
+  color: var(--ds-slate, #3d4f5f);
+}
+
+.ds-records-mrn {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--ds-navy-mid, #1a3a5c);
+  background: rgba(11, 92, 171, 0.08);
+  border-radius: 6px;
+  border: 1px solid rgba(11, 92, 171, 0.15);
+}
+
+.ds-records-col-id {
+  width: 5.5rem;
+}
+
+.ds-records-col-action {
+  width: 5.25rem;
+}
+
+.ds-records-address {
+  max-width: 11rem;
+  line-height: 1.35;
+}
+
+.ds-records-btn-view {
+  padding: 0.35rem 0.9rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border-radius: 8px !important;
+  border: none !important;
+  background: linear-gradient(180deg, #0b5cab 0%, #094a91 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 6px rgba(11, 92, 171, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.ds-records-btn-view:hover {
+  background: linear-gradient(180deg, #0c66c2 0%, #0b5cab 100%) !important;
+  color: #fff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(11, 92, 171, 0.4);
+}
+
+.ds-records-btn-view:active {
+  transform: translateY(0);
+}
+
+/* ——— Loading & empty ——— */
+.ds-records-page__loading {
+  padding: 3rem 1rem;
+}
+
+.ds-records-page__spinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--ds-accent, #0b5cab);
+}
+
+.ds-records-page__empty {
+  font-size: 0.95rem;
+}
+
+/* ——— Pagination ——— */
+.ds-records-page__pagination-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.ds-records-pagination .page-link {
+  color: var(--ds-navy-mid, #1a3a5c);
+  border-color: rgba(143, 163, 182, 0.5);
+  border-radius: 8px !important;
+  margin: 0 0.15rem;
+  font-size: 0.875rem;
+  padding: 0.4rem 0.65rem;
+}
+
+.ds-records-pagination .page-link:hover {
+  background: rgba(11, 92, 171, 0.08);
+  border-color: var(--ds-accent, #0b5cab);
+  color: var(--ds-navy, #0f2744);
+}
+
+.ds-records-pagination .page-item.disabled .page-link {
+  opacity: 0.45;
+}
+
+.ds-records-page__page-label {
+  font-size: 0.8125rem;
+  color: var(--ds-muted, #5c6d7d);
+  font-weight: 500;
+}
+
+/* Tablets / phones: stack toolbar and use full-width search */
+@media (max-width: 767.98px) {
+  .ds-records-page__header {
+    padding: 1rem 1rem 1.25rem;
+  }
+
+  .ds-records-page__title-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ds-records-page__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .ds-records-page__search-wrap {
+    flex: 1 1 auto;
+    max-width: none;
+  }
+
+  .ds-records-page__meta {
+    width: 100%;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+  }
+}
+
+/* iOS: 16px+ inputs avoid zoom-on-focus; keep compact on larger phones */
+@media (max-width: 576px) {
+  .ds-records-page__search {
+    font-size: 1rem !important;
+    padding: 0.7rem 0.85rem 0.7rem 2.65rem !important;
+    border-radius: 10px;
+  }
+
+  .ds-records-page__search-icon {
+    left: 0.8rem;
+  }
+}

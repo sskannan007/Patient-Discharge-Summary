@@ -1,5 +1,12 @@
-import DischargeSummaryFormCDC from './DischargeSummaryFormCDC.jsx';
+import { Routes, Route } from 'react-router-dom';
+import DischargeApp from './DischargeApp.jsx';
+import PatientRecordsPage from './PatientRecordsPage.jsx';
 
 export default function App() {
-  return <DischargeSummaryFormCDC />;
+  return (
+    <Routes>
+      <Route path="/" element={<DischargeApp />} />
+      <Route path="/records" element={<PatientRecordsPage />} />
+    </Routes>
+  );
 }

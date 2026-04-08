@@ -1,0 +1,465 @@
+@import './DischargeSummaryTheme.css';
+
+/**
+ * App shell — command bar for API workspace (pairs with DischargeSummaryTheme.css vars).
+ */
+
+.ds-app-command {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  background: linear-gradient(165deg, var(--ds-navy) 0%, var(--ds-navy-mid) 48%, #152f4a 100%);
+  color: #e8eef4;
+  box-shadow: 0 4px 24px rgba(15, 39, 68, 0.35);
+  border-bottom: 3px solid var(--ds-gold);
+  font-family: var(--ds-font-sans, system-ui, sans-serif);
+}
+
+.ds-app-command__inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0.875rem 1.25rem 1rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'brand panel'
+    'foot foot';
+  gap: 0.75rem 1.5rem;
+  align-items: center;
+}
+
+@media (max-width: 991.98px) {
+  .ds-app-command__inner {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'brand'
+      'panel'
+      'foot';
+  }
+}
+
+.ds-app-command__brand {
+  grid-area: brand;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.ds-app-command__title {
+  font-family: var(--ds-font-display, Georgia, serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.ds-app-command__tagline {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(232, 238, 244, 0.72);
+  font-weight: 500;
+}
+
+.ds-app-command__panel {
+  grid-area: panel;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.65rem 0.75rem;
+  padding: 0.65rem 0.85rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--ds-radius, 10px);
+  backdrop-filter: blur(8px);
+}
+
+.ds-app-command__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  min-width: min(100%, 260px);
+  flex: 1 1 220px;
+}
+
+.ds-app-command__label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(232, 238, 244, 0.75);
+  margin: 0;
+  font-weight: 600;
+}
+
+.ds-app-command__select {
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  background-color: #f7f9fc !important;
+  color: var(--ds-navy) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500;
+  border-radius: var(--ds-radius-sm, 6px) !important;
+  padding: 0.4rem 2rem 0.4rem 0.65rem !important;
+  box-shadow: inset 0 1px 2px rgba(15, 39, 68, 0.06);
+  cursor: pointer;
+  background-image: var(--ds-select-chevron);
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
+  background-size: 12px 8px;
+  appearance: none;
+}
+
+.ds-app-command__select:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.ds-app-command__select:focus {
+  border-color: var(--ds-accent) !important;
+  box-shadow: 0 0 0 3px var(--ds-accent-soft);
+  outline: none;
+}
+
+.ds-app-command__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  flex: 0 1 auto;
+}
+
+.ds-app-command__btn {
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.03em;
+  padding: 0.42rem 0.85rem !important;
+  border-radius: 999px !important;
+  border: 1px solid transparent !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.ds-app-command__btn:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+.ds-app-command__btn--load {
+  background: var(--ds-accent) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(11, 92, 171, 0.35);
+}
+
+.ds-app-command__btn--load:hover:not(:disabled) {
+  background: #094a8f !important;
+  color: #fff !important;
+}
+
+.ds-app-command__btn--save {
+  background: #1d6f4a !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #fff !important;
+}
+
+.ds-app-command__btn--save:hover:not(:disabled) {
+  background: #165a3c !important;
+  color: #fff !important;
+}
+
+.ds-app-command__btn--ghost {
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  color: #f0f4f8 !important;
+}
+
+.ds-app-command__btn--ghost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  color: #fff !important;
+}
+
+.ds-app-command__btn--demo {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(184, 134, 11, 0.55) !important;
+  color: #f5e6b8 !important;
+}
+
+.ds-app-command__btn--demo:hover:not(:disabled) {
+  background: rgba(184, 134, 11, 0.2) !important;
+  color: #fff !important;
+}
+
+.ds-app-command__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ds-app-command__badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(11, 92, 171, 0.35);
+  color: #dbe9f7;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.ds-app-command__foot {
+  grid-area: foot;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding-top: 0.1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 0.15rem;
+}
+
+.ds-app-command__hint {
+  font-size: 0.7rem;
+  color: rgba(232, 238, 244, 0.55);
+  letter-spacing: 0.02em;
+}
+
+.ds-app-command__hint code {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.12rem 0.4rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ds-app-command__actions--toolbar {
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+/* Two-cluster toolbar: workspace vs document actions */
+.ds-app-command__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.75rem 1rem;
+}
+
+.ds-app-command__toolbar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.ds-app-command__toolbar-label {
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgba(232, 238, 244, 0.45);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ds-app-command__toolbar-divider {
+  width: 1px;
+  align-self: stretch;
+  min-height: 2.5rem;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.2) 80%,
+    transparent 100%
+  );
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .ds-app-command__toolbar-divider {
+    width: 100%;
+    height: 1px;
+    min-height: 0;
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .ds-app-command__inner {
+    padding: 0.65rem 0.85rem 0.85rem;
+    gap: 0.65rem 1rem;
+  }
+
+  .ds-app-command__title {
+    font-size: 1.15rem;
+  }
+
+  .ds-app-command__tagline {
+    font-size: 0.68rem;
+  }
+
+  .ds-app-command__panel {
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+  }
+
+  .ds-app-command__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+  }
+
+  .ds-app-command__toolbar-group {
+    width: 100%;
+  }
+
+  .ds-app-command__actions {
+    gap: 0.45rem;
+    justify-content: stretch;
+  }
+
+  .ds-app-command__btn {
+    justify-content: center;
+  }
+  .ds-app-command__toolbar-divider {
+    display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .ds-app-command__btn {
+    font-size: 0.72rem !important;
+    padding: 0.4rem 0.55rem !important;
+  }
+
+  .ds-app-command__actions {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Print — frosted outline */
+.ds-app-command__btn--print {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  color: #f0f6ff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.ds-app-command__btn--print:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border-color: rgba(255, 255, 255, 0.55) !important;
+  color: #fff !important;
+}
+
+/* PDF — gold / document export */
+.ds-app-command__btn--pdf {
+  background: linear-gradient(165deg, rgba(184, 134, 11, 0.35) 0%, rgba(212, 168, 75, 0.22) 100%) !important;
+  border-color: rgba(245, 230, 184, 0.45) !important;
+  color: #fff8e8 !important;
+  box-shadow: 0 2px 10px rgba(184, 134, 11, 0.25);
+}
+
+.ds-app-command__btn--pdf:hover:not(:disabled) {
+  background: linear-gradient(165deg, rgba(184, 134, 11, 0.5) 0%, rgba(212, 168, 75, 0.35) 100%) !important;
+  color: #fff !important;
+}
+
+/* Save Data — idle (no form content yet): muted */
+.ds-app-command__btn--savedata.ds-app-command__btn--savedata-idle:disabled {
+  background: linear-gradient(180deg, #3d5248 0%, #2d3d36 100%) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: rgba(255, 255, 255, 0.55) !important;
+  box-shadow: none !important;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+/* Save Data — ready: bright, obvious CTA */
+.ds-app-command__btn--savedata.ds-app-command__btn--savedata-ready:not(:disabled) {
+  background: linear-gradient(180deg, #26d688 0%, #14b86a 100%) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  color: #fff !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.2),
+    0 4px 18px rgba(20, 184, 106, 0.55);
+}
+
+.ds-app-command__btn--savedata.ds-app-command__btn--savedata-ready:not(:disabled):hover {
+  background: linear-gradient(180deg, #34e898 0%, #18c978 100%) !important;
+  color: #fff !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.28),
+    0 6px 22px rgba(20, 184, 106, 0.6);
+}
+
+/* Save Data — saving (disabled but visibly active) */
+.ds-app-command__btn--savedata.ds-app-command__btn--savedata-saving:disabled {
+  background: linear-gradient(180deg, #1a8f5c 0%, #136b45 100%) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  color: #fff !important;
+  opacity: 0.92;
+  cursor: wait;
+  box-shadow: 0 2px 12px rgba(19, 107, 69, 0.45);
+}
+
+.ds-app-command__btn--record {
+  background: var(--ds-accent) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(11, 92, 171, 0.35);
+}
+
+.ds-app-command__btn--record:hover:not(:disabled) {
+  background: #094a8f !important;
+  color: #fff !important;
+}
+
+.ds-app-command__spinner {
+  display: inline-block;
+  width: 0.85rem;
+  height: 0.85rem;
+  margin-right: 0.35rem;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ds-app-spin 0.6s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes ds-app-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ds-app-placeholder__card {
+  max-width: 36rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem 1.5rem;
+  border: 1px dashed var(--ds-rule-strong, #8fa3b6);
+  border-radius: var(--ds-radius, 10px);
+  background: var(--ds-accent-soft, rgba(11, 92, 171, 0.08));
+}
+
+.ds-app-loading-banner {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--ds-muted, #5c6d7d);
+}
+
+.ds-app-alerts {
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+}

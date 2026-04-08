@@ -551,3 +551,88 @@
   border-color: var(--ds-accent);
   color: #fff;
 }
+
+/* Section 1 — native date/time pickers (datetime-local / date) */
+.ds-datetime-field {
+  min-width: 11.5rem;
+  max-width: 100%;
+}
+
+.ds-date-field {
+  min-width: 10rem;
+}
+
+/* ——— Small screens: form readable without horizontal page scroll ——— */
+@media screen and (max-width: 991.98px) {
+  .discharge-summary-print-area {
+    min-width: 0;
+  }
+
+  .ds-print-inner {
+    margin: 16px auto !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  .ds-masthead__ribbon {
+    padding: 1rem 1rem 1.25rem;
+  }
+
+  .ds-masthead__org {
+    font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+
+  .ds-masthead__title {
+    font-size: clamp(1.05rem, 4vw, 1.45rem);
+    letter-spacing: 0.08em;
+  }
+
+  .ds-masthead__title-block {
+    padding: 1rem 1rem 1.25rem;
+  }
+}
+
+@media screen and (max-width: 767.98px) {
+  .ds-print-inner {
+    margin: 10px 0 !important;
+    padding-left: 0.65rem !important;
+    padding-right: 0.65rem !important;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+
+  .ds-section1-table-wrap {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ds-section1-table .ds-section1-label-cell {
+    white-space: normal;
+    min-width: 5.5rem;
+  }
+
+  .ds-section1-table .ds-section1-value-cell {
+    min-width: 8rem;
+  }
+
+  .ds-datetime-field,
+  .ds-date-field {
+    min-width: 0 !important;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .ds-section1-table .ds-section1-split-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media screen and (max-width: 575.98px) {
+  .ds-section-card__header {
+    font-size: 0.9rem;
+    padding: 0.65rem 0.85rem !important;
+  }
+}
